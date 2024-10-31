@@ -1,6 +1,6 @@
 import { Container, Stack } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import AppBar from "../components/Appbar";
+import AppBar from "../components/AppBar";
 
 export default function Root() {
   return (
