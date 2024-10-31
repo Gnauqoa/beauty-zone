@@ -1,54 +1,24 @@
-
 # Logs
 logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Dependency directories
-node_modules/
-.pnp/
-.pnp.js
+node_modules
+dist
+dist-ssr
+*.local
 
-# Build output
-dist/
-build/
-
-# Caches
-.cache/
-.tmp/
-.cache-loader
-
-# Testing
-coverage/
-*.lcov
-
-# Environment variable files
-.env
-.env.*.local
-
-# Editor settings
-.vscode/
-.idea/
-*.swp
-*.sublime*
-
-# System files
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
 .DS_Store
-Thumbs.db
-
-# Optional npm cache
-.npm/
-
-# Ignore Parcel cache
-.parcel-cache/
-
-# Ignore eslint cache
-.eslintcache
-
-# Ignore yarn lock files if not using Yarn workspaces
-yarn.lock
-
-# Miscellaneous
-*.tsbuildinfo
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
