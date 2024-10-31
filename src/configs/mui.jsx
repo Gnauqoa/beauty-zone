@@ -6,7 +6,7 @@ import { palettes } from "./constants";
 const theme = createTheme({
   palette: palettes,
   typography: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"Roboto", "Helvetica", "Montserrat", "Arial", sans-serif',
     h4: {
       fontWeight: 600, // Customize typography weight
     },
