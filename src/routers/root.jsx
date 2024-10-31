@@ -11,6 +11,7 @@ export default function Root() {
           display: "flex",
           flexDirection: "column",
           width: "100%",
+          minHeight: "100vh",
         }}
       >
         <AppBar />
