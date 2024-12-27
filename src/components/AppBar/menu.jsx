@@ -8,6 +8,7 @@ import { MenuItem, Stack, Typography } from "@mui/material";
 import { Menu as MuiMenu } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "../../context/auth";
+import SignInModal from "../../routers/auth";
 
 const Menu = () => {
   const { isLogin, login, logout } = useAuth();
@@ -73,6 +74,11 @@ const Menu = () => {
           </Typography>
         </div>
       )}
+      <SearchOutlined sx={{ width: 40 }} />
+      <FavoriteBorderOutlined sx={{ width: 40 }} />
+      <ShoppingBagOutlined sx={{ width: 40 }} />
+      <PersonOutline sx={{ width: 40 }} />
+      <SignInModal />
     </Stack>
   );
 };
