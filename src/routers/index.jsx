@@ -3,8 +3,10 @@ import {
   RouterProvider as ReactRouterDomProvider,
 } from "react-router-dom";
 import Root from "./root";
-import ErrorPage from "./error-page";
-import Contact from "./contact";
+import ErrorPage from "../pages/error-page";
+import Contact from "../pages/contact";
+import { PATH_PAGE } from "./path";
+import VirtualServices from "../pages/virtual-services";
 
 const router = createBrowserRouter([
   {
@@ -16,9 +18,12 @@ const router = createBrowserRouter([
         path: "contacts/:contactId",
         element: <Contact />,
       },
+      {
+        path: PATH_PAGE.virtualServices,
+        element: <VirtualServices />,
+      },
     ],
   },
-
 ]);
 
 const RouterProvider = () => {
