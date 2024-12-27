@@ -1,24 +1,22 @@
 import { useRef, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
+import ProgressModal from "../../../components/progress-modal";
 
 const Step2 = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
   const startCamera = async () => {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      console.log("Accessing the camera...");
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: true,
         });
-        console.log("Camera accessed");
-        console.log({ videoRef });
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
-          console.log("Camera started");
           setIsCameraActive(true);
         }
       } catch (err) {
@@ -44,10 +42,15 @@ const Step2 = () => {
         canvas.height = videoRef.current.videoHeight;
         context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
         const image = canvas.toDataURL("image/png");
-        setCapturedImage(image); // Save captured image
-        stopCamera(); // Stop camera after capture
+        setCapturedImage(image);
+        stopCamera();
       }
     }
+  };
+
+  const handleTakeMeSuggest = () => {
+    console.log("Processing...");
+    setOpenModal(true);
   };
 
   return (
@@ -81,11 +84,9 @@ const Step2 = () => {
         style={{ width: "100%", borderRadius: "8px" }}
       ></video>
       {isCameraActive && (
-        <>
-          <Button variant="contained" color="secondary" onClick={capturePhoto}>
-            Capture Photo
-          </Button>
-        </>
+        <Button variant="contained" color="secondary" onClick={capturePhoto}>
+          Capture Photo
+        </Button>
       )}
 
       {capturedImage && (
@@ -106,10 +107,10 @@ const Step2 = () => {
               Retake Photo
             </Button>
             <Button
-              color="background"
+              color="primary"
               sx={{ textTransform: "none" }}
               variant="contained"
-              onClick={() => setCapturedImage(null)}
+              onClick={handleTakeMeSuggest}
             >
               Take me suggest!
             </Button>
@@ -118,6 +119,13 @@ const Step2 = () => {
       )}
 
       <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
+
+      {/* Progress Modal */}
+      <ProgressModal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        onComplete={() => console.log("Progress completed!")}
+      />
     </Stack>
   );
 };
