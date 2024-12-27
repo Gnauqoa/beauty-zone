@@ -6,6 +6,7 @@ export const PATH_PAGE = {
     root: "/mobile",
     findYourShape: {
       step1: "/mobile/fys-step-1",
+      step2: "/mobile/fys-step-2",
     },
   },
 };

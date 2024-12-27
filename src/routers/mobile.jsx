@@ -7,9 +7,10 @@ const Mobile = () => (
       display: "flex",
       flexDirection: "column",
       bgcolor: "background.default",
+      minHeight: "100vh",
     }}
   >
-    <img src="/logo.svg" className="w-[80px]"/>
+    <img src="/logo.svg" className="w-[80px]" />
     <Outlet />
   </Stack>
 );

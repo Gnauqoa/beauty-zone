@@ -10,6 +10,7 @@ import VirtualServices from "../pages/virtual-services";
 import FindYourShape from "../pages/find-your-shape";
 import Step1 from "../pages/find-your-shape/mobile/step-1";
 import Mobile from "./mobile";
+import Step2 from "../pages/find-your-shape/mobile/step-2";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: PATH_PAGE.mobile.findYourShape.step1,
         element: <Step1 />,
+      },
+      {
+        path: PATH_PAGE.mobile.findYourShape.step2,
+        element: <Step2 />,
       },
     ],
   },

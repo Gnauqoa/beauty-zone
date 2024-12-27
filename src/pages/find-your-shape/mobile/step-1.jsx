@@ -1,4 +1,6 @@
 import { Button, Stack, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
+import { PATH_PAGE } from "../../../routers/path";
 
 const Step1 = () => {
   return (
@@ -46,17 +48,19 @@ const Step1 = () => {
         your mouth is not open too wide.
       </Typography>
       <div>
-        <Button
-          sx={{
-            borderRadius: "24px",
-            color: "primary.main",
-            bgcolor: "transparent",
-            border: "1px solid",
-            textTransform: "none",
-          }}
-        >
-          Let's go
-        </Button>
+        <Link to={PATH_PAGE.mobile.findYourShape.step2}>
+          <Button
+            sx={{
+              borderRadius: "24px",
+              color: "primary.main",
+              bgcolor: "transparent",
+              border: "1px solid",
+              textTransform: "none",
+            }}
+          >
+            Let's go
+          </Button>{" "}
+        </Link>
       </div>
     </Stack>
   );
