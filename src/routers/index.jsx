@@ -12,6 +12,7 @@ import Step1 from "../pages/find-your-shape/mobile/step-1";
 import Mobile from "./mobile";
 import Step2 from "../pages/find-your-shape/mobile/step-2";
 import Step3 from "../pages/find-your-shape/mobile/step-3";
+import { Stack } from "@mui/material";
 
 const router = createBrowserRouter([
   {
@@ -20,8 +21,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "contacts/:contactId",
-        element: <Contact />,
+        path: PATH_PAGE.main,
+        element: <Stack sx={{ minHeight: "100vh" }}></Stack>,
       },
       {
         path: PATH_PAGE.virtualServices,
