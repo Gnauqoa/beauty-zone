@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Modal, Box, Typography } from "@mui/material";
+import { Modal, Box, Typography, Button } from "@mui/material";
 import StyledLinearProgress from "../LinearProgress";
 
-const ProgressModal = ({ open, onClose, onComplete }) => {
+const ProgressModal = ({ open, onClose }) => {
   const [progress, setProgress] = React.useState(0);
-
+  const [isCompleted, setIsCompleted] = React.useState(false);
   useEffect(() => {
     if (open) {
       setProgress(0); // Reset progress when modal opens
@@ -15,8 +15,7 @@ const ProgressModal = ({ open, onClose, onComplete }) => {
           if (next >= 100) {
             clearInterval(interval);
             setTimeout(() => {
-              onComplete(); // Notify parent when complete
-              onClose(); // Close modal
+              setIsCompleted(true); // Notify parent when complete
             }, 500);
           }
           return next;
@@ -24,7 +23,7 @@ const ProgressModal = ({ open, onClose, onComplete }) => {
       }, 300); // Increment every 300ms
       return () => clearInterval(interval);
     }
-  }, [open, onClose, onComplete]);
+  }, [open, onClose]);
 
   return (
     <Modal
@@ -56,14 +55,21 @@ const ProgressModal = ({ open, onClose, onComplete }) => {
         >
           Gorgeous!
         </Typography>
-        <Typography
-          sx={{
-            fontSize: 24,
-          }}
-        >
-          Please give us time to observe this beautiful
-        </Typography>
-        <StyledLinearProgress variant="determinate" value={progress} />
+
+        {isCompleted ? (
+          <Button variant="contained">Show me result!</Button>
+        ) : (
+          <>
+            <Typography
+              sx={{
+                fontSize: 24,
+              }}
+            >
+              Please give us time to observe this beautiful
+            </Typography>
+            <StyledLinearProgress variant="determinate" value={progress} />
+          </>
+        )}
       </Box>
     </Modal>
   );
