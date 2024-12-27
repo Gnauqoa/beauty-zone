@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Modal, Box, Typography, Button } from "@mui/material";
 import StyledLinearProgress from "../LinearProgress";
+import { Link } from "react-router-dom";
+import { PATH_PAGE } from "../../routers/path";
 
 const ProgressModal = ({ open, onClose }) => {
   const [progress, setProgress] = React.useState(0);
@@ -53,20 +55,35 @@ const ProgressModal = ({ open, onClose }) => {
         <Typography
           sx={{ fontSize: 24, fontWeight: 600, color: "primary.main" }}
         >
-          Gorgeous!
+          {isCompleted ? "All done!" : "Gorgeous!"}
         </Typography>
 
+        <Typography
+          sx={{
+            fontSize: 24,
+          }}
+        >
+          {isCompleted
+            ? "Please check your fit"
+            : "Please give us time to observe this beautiful"}
+        </Typography>
         {isCompleted ? (
-          <Button variant="contained">Show me result!</Button>
+          <div>
+            <Link to={PATH_PAGE.mobile.findYourShape.step3}>
+              <Button
+                variant="outlined"
+                sx={{
+                  textTransform: "none",
+                  fontWeight: 600,
+                  borderRadius: "24px",
+                }}
+              >
+                Check it out
+              </Button>
+            </Link>
+          </div>
         ) : (
           <>
-            <Typography
-              sx={{
-                fontSize: 24,
-              }}
-            >
-              Please give us time to observe this beautiful
-            </Typography>
             <StyledLinearProgress variant="determinate" value={progress} />
           </>
         )}

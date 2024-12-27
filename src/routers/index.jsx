@@ -11,6 +11,7 @@ import FindYourShape from "../pages/find-your-shape";
 import Step1 from "../pages/find-your-shape/mobile/step-1";
 import Mobile from "./mobile";
 import Step2 from "../pages/find-your-shape/mobile/step-2";
+import Step3 from "../pages/find-your-shape/mobile/step-3";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: PATH_PAGE.mobile.findYourShape.step2,
         element: <Step2 />,
+      },
+      {
+        path: PATH_PAGE.mobile.findYourShape.step3,
+        element: <Step3 />,
       },
     ],
   },

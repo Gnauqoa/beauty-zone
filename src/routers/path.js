@@ -7,6 +7,7 @@ export const PATH_PAGE = {
     findYourShape: {
       step1: "/mobile/fys-step-1",
       step2: "/mobile/fys-step-2",
+      step3: "/mobile/fys-step-3",
     },
   },
 };
