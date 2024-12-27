@@ -5,6 +5,7 @@ import {
 import Root from "./root";
 import ErrorPage from "./error-page";
 import Contact from "./contact";
+import Auth from "./auth";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-
 ]);
 
 const RouterProvider = () => {
