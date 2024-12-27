@@ -1,11 +1,12 @@
 import { Stack, Typography } from "@mui/material";
 import { QRCodeSVG } from "qrcode.react";
 import bg1 from "../../assets/find-your-shape/background1.webp";
+import { PATH_PAGE } from "../../routers/path";
 
 const FindYourShape = () => {
   // Get the current host and generate the URL
   const currentHost = window.location.origin;
-  const qrCodeUrl = `${currentHost}/find-your-shape/mobile-step-1`;
+  const qrCodeUrl = `${currentHost}${PATH_PAGE.mobile.findYourShape.step1}`;
 
   return (
     <Stack

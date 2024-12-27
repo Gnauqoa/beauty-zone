@@ -8,6 +8,8 @@ import Contact from "../pages/contact";
 import { PATH_PAGE } from "./path";
 import VirtualServices from "../pages/virtual-services";
 import FindYourShape from "../pages/find-your-shape";
+import Step1 from "../pages/find-your-shape/mobile/step-1";
+import Mobile from "./mobile";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,17 @@ const router = createBrowserRouter([
       {
         path: PATH_PAGE.findYourShape,
         element: <FindYourShape />,
+      },
+    ],
+  },
+  {
+    path: "/mobile",
+    element: <Mobile />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: PATH_PAGE.mobile.findYourShape.step1,
+        element: <Step1 />,
       },
     ],
   },
