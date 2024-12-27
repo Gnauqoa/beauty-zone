@@ -2,12 +2,14 @@ import { Stack, Typography } from "@mui/material";
 import { QRCodeSVG } from "qrcode.react";
 import bg1 from "../../assets/find-your-shape/background1.webp";
 import { PATH_PAGE } from "../../routers/path";
+import { useSearchParams } from "react-router-dom";
 
 const FindYourShape = () => {
   // Get the current host and generate the URL
   const currentHost = window.location.origin;
   const qrCodeUrl = `${currentHost}${PATH_PAGE.mobile.findYourShape.step1}`;
-
+  const [searchParams] = useSearchParams();
+  const resultPage = searchParams.get("result");
   return (
     <Stack
       sx={{
@@ -48,20 +50,28 @@ const FindYourShape = () => {
         }}
       >
         <Typography sx={{ fontSize: 45, fontWeight: 600 }}>
-          SHADE FINDER
+          {resultPage === "true" ? "CHECK THE RESULT" : "SHADE FINDER"}
         </Typography>
         <Typography sx={{ fontSize: 24, fontWeight: 300 }}>
-          USING AI TECHNOLOGY, INSTANTLY FIND YOUR FOUNDATION SHADE BASED ON
-          YOUR SKIN ANALYSIS
+          {resultPage === "true"
+            ? "USING AI TECHNOLOGY, INSTANTLY FIND YOUR FOUNDATION SHADE BASED ON YOUR SKIN ANALYSIS"
+            : "THE ANALYSIS PROCESS IS COMPLETED. YOU CAN CHECK YOUR RESULTS NOW"}
         </Typography>
-        <QRCodeSVG value={qrCodeUrl} size={150} />
-
-        <Typography
-          sx={{ fontSize: 24, color: "background.default", fontWeight: 300 }}
-        >
-          This experience is mobile only. Use your phone to scan the QR code to
-          get started.
-        </Typography>
+        {resultPage !== "true" && <QRCodeSVG value={qrCodeUrl} size={150} />}
+        {resultPage === "true" ? (
+          <Typography
+            sx={{ fontSize: 45, fontWeight: 600, color: "background.default" }}
+          >
+            Click here
+          </Typography>
+        ) : (
+          <Typography
+            sx={{ fontSize: 24, color: "background.default", fontWeight: 300 }}
+          >
+            This experience is mobile only. Use your phone to scan the QR code
+            to get started.
+          </Typography>
+        )}
       </Stack>
     </Stack>
   );

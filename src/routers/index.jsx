@@ -4,7 +4,6 @@ import {
 } from "react-router-dom";
 import Root from "./root";
 import ErrorPage from "../pages/error-page";
-import Contact from "../pages/contact";
 import { PATH_PAGE } from "./path";
 import VirtualServices from "../pages/virtual-services";
 import FindYourShape from "../pages/find-your-shape";
@@ -13,6 +12,7 @@ import Mobile from "./mobile";
 import Step2 from "../pages/find-your-shape/mobile/step-2";
 import Step3 from "../pages/find-your-shape/mobile/step-3";
 import { Stack } from "@mui/material";
+import Result from "../pages/find-your-shape/desktop/result";
 
 const router = createBrowserRouter([
   {
@@ -29,8 +29,12 @@ const router = createBrowserRouter([
         element: <VirtualServices />,
       },
       {
-        path: PATH_PAGE.findYourShape,
+        path: PATH_PAGE.findYourShape.root,
         element: <FindYourShape />,
+      },
+      {
+        path: PATH_PAGE.findYourShape.result,
+        element: <Result />,
       },
     ],
   },
