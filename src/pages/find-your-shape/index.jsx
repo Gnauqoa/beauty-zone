@@ -19,6 +19,7 @@ const FindYourShape = () => {
         width: "100%",
         height: "100%",
         backgroundColor: "secondary.main",
+        position: "relative",
       }}
     >
       <img
