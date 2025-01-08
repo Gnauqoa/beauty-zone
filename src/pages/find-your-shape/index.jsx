@@ -2,7 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import { QRCodeSVG } from "qrcode.react";
 import bg1 from "../../assets/find-your-shape/background1.webp";
 import { PATH_PAGE } from "../../routers/path";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const FindYourShape = () => {
   // Get the current host and generate the URL
