@@ -29,6 +29,7 @@ const Menu = () => {
     console.log(PATH_PAGE.outlet.cart);
     navigate(PATH_PAGE.outlet.cart);
   };
+
   return (
     <Stack
       sx={{
@@ -43,10 +44,15 @@ const Menu = () => {
         <>
           <SearchOutlined sx={{ width: 40 }} />
           <FavoriteBorderOutlined sx={{ width: 40 }} />
-          <ShoppingBagOutlined sx={{ width: 40 }} />
+          <ShoppingBagOutlined
+            sx={{ width: 40, cursor: "pointer" }}
+            onClick={handleCart}
+          />
           <div onClick={handleClick}>
             <PersonOutline sx={{ width: 40 }} />
           </div>
+          <SignInModal />
+
           <MuiMenu
             id="basic-menu"
             anchorEl={anchorEl}
