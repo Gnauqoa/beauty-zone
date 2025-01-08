@@ -68,6 +68,9 @@ const SubBar = () => {
           flexDirection: "column",
           width: "100%",
           justifyContent: "center",
+          position: "absolute",
+          top: "120px",
+          zIndex: 20,
         }}
       >
         <Button
