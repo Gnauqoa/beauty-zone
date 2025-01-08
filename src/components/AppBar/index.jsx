@@ -3,8 +3,10 @@ import Menu from "./menu.jsx";
 import SubBar from "./subBar.jsx";
 import { Link } from "react-router-dom";
 import { PATH_PAGE } from "../../routers/path.js";
+import useResponsive from "../../hooks/useResponsive.js";
 
 const AppBar = () => {
+  const isSm = useResponsive("down", "sm");
   return (
     <Stack
       sx={{
@@ -24,16 +26,18 @@ const AppBar = () => {
           <Link to={PATH_PAGE.main}>
             <img className="h-[120px]" src={"/logo.svg"} />
           </Link>
-          <Typography fontFamily={"Montserrat"}>
-            <i>
-              step into the beauty zone, <br /> &nbsp; &nbsp; where confidence
-              blooms and self-love reigns.
-            </i>
-          </Typography>
-          <Menu />{" "}
+          {!isSm && (
+            <Typography fontFamily={"Montserrat"}>
+              <i>
+                step into the beauty zone, <br /> &nbsp; &nbsp; where confidence
+                blooms and self-love reigns.
+              </i>
+            </Typography>
+          )}
+          <Menu />
         </Stack>
-      </Container>{" "}
-      <SubBar />
+      </Container>
+      {!isSm && <SubBar />}
     </Stack>
   );
 };

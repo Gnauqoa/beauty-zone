@@ -1,6 +1,8 @@
 import { Container, Stack, Typography } from "@mui/material";
+import useResponsive from "../../hooks/useResponsive";
 
 const Footer = () => {
+  const isSm = useResponsive("down", "sm");
   return (
     <Stack
       sx={{
@@ -11,9 +13,9 @@ const Footer = () => {
       <Container
         sx={{
           display: "flex",
-          flexDirection: "row",
-
-          justifyContent: "space-between",
+          flexDirection: isSm ? "column" : "row",
+          gap: isSm ? 3 : 0,
+          justifyContent: isSm ? "center" : "space-between",
         }}
       >
         <Logo />
