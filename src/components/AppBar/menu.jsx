@@ -29,6 +29,7 @@ const Menu = () => {
     console.log(PATH_PAGE.outlet.cart);
     navigate(PATH_PAGE.outlet.cart);
   };
+ 
 
   return (
     <Stack
@@ -52,7 +53,6 @@ const Menu = () => {
             <PersonOutline sx={{ width: 40 }} />
           </div>
           <SignInModal />
-
           <MuiMenu
             id="basic-menu"
             anchorEl={anchorEl}
