@@ -1,6 +1,8 @@
 import {
-  createBrowserRouter,
-  RouterProvider as ReactRouterDomProvider,
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
 } from "react-router-dom";
 import Root from "./root";
 import ErrorPage from "../pages/error-page";
@@ -14,53 +16,45 @@ import Step3 from "../pages/find-your-shape/mobile/step-3";
 import { Stack } from "@mui/material";
 import Result from "../pages/find-your-shape/desktop/result";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: PATH_PAGE.main,
-        element: <Stack sx={{ minHeight: "100vh" }}></Stack>,
-      },
-      {
-        path: PATH_PAGE.virtualServices,
-        element: <VirtualServices />,
-      },
-      {
-        path: PATH_PAGE.findYourShape.root,
-        element: <FindYourShape />,
-      },
-      {
-        path: PATH_PAGE.findYourShape.result,
-        element: <Result />,
-      },
-    ],
-  },
-  {
-    path: "/mobile",
-    element: <Mobile />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: PATH_PAGE.mobile.findYourShape.step1,
-        element: <Step1 />,
-      },
-      {
-        path: PATH_PAGE.mobile.findYourShape.step2,
-        element: <Step2 />,
-      },
-      {
-        path: PATH_PAGE.mobile.findYourShape.step3,
-        element: <Step3 />,
-      },
-    ],
-  },
-]);
-
 const RouterProvider = () => {
-  return <ReactRouterDomProvider router={router} />;
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Root />}>
+          <Route
+            path={PATH_PAGE.main}
+            element={<Stack sx={{ minHeight: "100vh" }} />}
+          />
+          <Route
+            path={PATH_PAGE.virtualServices}
+            element={<VirtualServices />}
+          />
+          <Route
+            path={PATH_PAGE.findYourShape.root}
+            element={<FindYourShape />}
+          />
+          <Route path={PATH_PAGE.findYourShape.result} element={<Result />} />
+          <Route path="*" element={<Navigate to={PATH_PAGE.main} />} />
+        </Route>
+
+        <Route path="/mobile" element={<Mobile />}>
+          <Route
+            path={PATH_PAGE.mobile.findYourShape.step1}
+            element={<Step1 />}
+          />
+          <Route
+            path={PATH_PAGE.mobile.findYourShape.step2}
+            element={<Step2 />}
+          />
+          <Route
+            path={PATH_PAGE.mobile.findYourShape.step3}
+            element={<Step3 />}
+          />
+          <Route path="*" element={<ErrorPage />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
 };
 
 export default RouterProvider;
