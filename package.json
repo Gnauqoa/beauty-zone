@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "copy-to-cordova": "cp -r dist/* cordova/www && cp -r dist/assets/* cordova/www/assets && rm -rf dist",
+    "clear-cordova": "rm -rf cordova/www/*",
+    "build-a": "yarn build && yarn clear-cordova && yarn copy-to-cordova && cd cordova && cordova build android",
+    "run-a": "yarn build-android && cd cordova && cordova run android"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
