@@ -40,7 +40,7 @@ const VirtualServices = () => {
         </Link>
       </Banner>
       <Banner imgSrc={bg2}>
-        <Link to={PATH_PAGE.findYourShape.root}>
+        <Link to={PATH_PAGE.virtualServices.virtualConsultation}>
           <Typography
             sx={{
               fontSize: isMd ? 16 : 40,
