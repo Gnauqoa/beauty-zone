@@ -5,7 +5,7 @@ import bg1 from "../../assets/virtual-services/background1.png";
 import bg2 from "../../assets/virtual-services/background2.png";
 
 const VirtualServices = () => {
-  const isSm = useResponsive("down", "sm");
+  const isMd = useResponsive("down", "md");
   return (
     <Stack
       sx={{
@@ -20,17 +20,17 @@ const VirtualServices = () => {
       }}
     >
       <Banner imgSrc={bg1}>
-        <Typography sx={{ fontSize: isSm ? 22 : 70, fontWeight: 600 }}>
+        <Typography sx={{ fontSize: isMd ? 22 : 70, fontWeight: 600 }}>
           FIND YOUR SHAPE
         </Typography>
-        <Typography sx={{ fontSize: isSm ? 16 : 24, fontWeight: 400 }}>
+        <Typography sx={{ fontSize: isMd ? 16 : 24, fontWeight: 400 }}>
           FIND YOUR PERFECT SHAPE WITH A QUICK SELFIE WE’LL DO THE REST
         </Typography>
 
         <Link to={PATH_PAGE.findYourShape.root}>
           <Typography
             sx={{
-              fontSize: isSm ? 12 : 40,
+              fontSize: isMd ? 12 : 40,
               fontWeight: 600,
               textDecoration: "underline",
             }}
@@ -43,7 +43,7 @@ const VirtualServices = () => {
         <Link to={PATH_PAGE.findYourShape.root}>
           <Typography
             sx={{
-              fontSize: isSm ? 16 : 40,
+              fontSize: isMd ? 16 : 40,
               fontWeight: 600,
               textDecoration: "underline",
             }}
@@ -51,10 +51,10 @@ const VirtualServices = () => {
             Find now
           </Typography>
         </Link>
-        <Typography sx={{ fontSize: isSm ? 22 : 70, fontWeight: 600 }}>
+        <Typography sx={{ fontSize: isMd ? 22 : 70, fontWeight: 600 }}>
           VIRTUAL <br></br> CONSULTATION
         </Typography>
-        <Typography sx={{ fontSize: isSm ? 12 : 24, fontWeight: 400 }}>
+        <Typography sx={{ fontSize: isMd ? 12 : 24, fontWeight: 400 }}>
           MAKE A CONSULTATION WITH OUR AI CHATBOX AND GET YOUR OWN BEAUTY
         </Typography>
       </Banner>

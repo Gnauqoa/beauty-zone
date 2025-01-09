@@ -50,7 +50,7 @@ const ListTab = [
 ];
 
 const SubBar = () => {
-  const isSm = useResponsive("down", "sm");
+  const isMd = useResponsive("down", "md");
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ const SubBar = () => {
     setAnchorEl(null);
   };
 
-  if (isSm) {
+  if (isMd) {
     return (
       <Stack
         sx={{

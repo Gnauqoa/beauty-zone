@@ -12,8 +12,8 @@ const FindYourShape = () => {
   const qrCodeUrl = `${currentHost}${PATH_PAGE.mobile.findYourShape.step1}`;
   const [searchParams] = useSearchParams();
   const resultPage = searchParams.get("result");
-  const isSm = useResponsive("down", "sm");
-  if (isSm) return <Navigate to={PATH_PAGE.mobile.findYourShape.step1} />;
+  const isMd = useResponsive("down", "md");
+  if (isMd) return <Navigate to={PATH_PAGE.mobile.findYourShape.step1} />;
 
   return (
     <Stack
@@ -52,7 +52,7 @@ const FindYourShape = () => {
           textAlign: "center",
           borderRadius: "12px",
           gap: 3,
-          maxWidth: isSm ? "60%" : "35%",
+          maxWidth: isMd ? "60%" : "35%",
         }}
       >
         <Typography sx={{ fontSize: 45, fontWeight: 600 }}>

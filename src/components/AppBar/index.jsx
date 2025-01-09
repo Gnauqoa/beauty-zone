@@ -6,7 +6,7 @@ import { PATH_PAGE } from "../../routers/path.js";
 import useResponsive from "../../hooks/useResponsive.js";
 
 const AppBar = () => {
-  const isSm = useResponsive("down", "sm");
+  const isMd = useResponsive("down", "md");
   return (
     <div className="flex flex-col w-full">
       <Stack
@@ -27,7 +27,7 @@ const AppBar = () => {
             <Link to={PATH_PAGE.main}>
               <img style={{ height: "120px" }} src={"/logo.svg"} />
             </Link>
-            {!isSm && (
+            {!isMd && (
               <Typography fontFamily={"Montserrat"}>
                 <i>
                   step into the beauty zone, <br /> &nbsp; &nbsp; where
