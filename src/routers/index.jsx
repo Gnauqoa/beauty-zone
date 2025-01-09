@@ -7,6 +7,7 @@ import ErrorPage from "../pages/error-page";
 import Contact from "../pages/contact";
 import { PATH_PAGE } from "./path";
 import VirtualServices from "../pages/virtual-services";
+import SalePage from "../pages/outlet/sale-page";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: PATH_PAGE.virtualServices,
         element: <VirtualServices />,
+      },
+      {
+        path: "sale",
+        element: <SalePage />,
       },
     ],
   },

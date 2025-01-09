@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import AppBar from "../components/AppBar";
-
+import MenuBar from "../components/AppBar/menuBar";
 export default function Root() {
   return (
     <>
@@ -15,7 +15,7 @@ export default function Root() {
         }}
       >
         <AppBar />
-
+        <MenuBar />
         <Outlet />
       </Stack>
     </>

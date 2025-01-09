@@ -5,7 +5,7 @@ import {
   ShoppingBagOutlined,
 } from "@mui/icons-material";
 import { Stack, Typography } from "@mui/material";
-import SignInModal from "../../routers/auth";
+import SignInModal from "../../pages/auth/auth";
 
 const Menu = () => {
   return (
