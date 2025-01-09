@@ -2,7 +2,8 @@ import { Stack, Typography } from "@mui/material";
 import { QRCodeSVG } from "qrcode.react";
 import bg1 from "../../assets/find-your-shape/background1.webp";
 import { PATH_PAGE } from "../../routers/path";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, Navigate, useSearchParams } from "react-router-dom";
+import useResponsive from "../../hooks/useResponsive";
 
 const FindYourShape = () => {
   // Get the current host and generate the URL
@@ -11,6 +12,9 @@ const FindYourShape = () => {
   const qrCodeUrl = `${currentHost}${PATH_PAGE.mobile.findYourShape.step1}`;
   const [searchParams] = useSearchParams();
   const resultPage = searchParams.get("result");
+  const isMd = useResponsive("down", "md");
+  if (isMd) return <Navigate to={PATH_PAGE.mobile.findYourShape.step1} />;
+
   return (
     <Stack
       sx={{
@@ -48,7 +52,7 @@ const FindYourShape = () => {
           textAlign: "center",
           borderRadius: "12px",
           gap: 3,
-          maxWidth: "35%",
+          maxWidth: isMd ? "60%" : "35%",
         }}
       >
         <Typography sx={{ fontSize: 45, fontWeight: 600 }}>

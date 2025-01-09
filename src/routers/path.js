@@ -1,10 +1,15 @@
 export const PATH_PAGE = {
   main: "/",
-  virtualServices: "/virtual-services",
+  virtualServices: {
+    root: "/virtual-services",
+    virtualConsultation: "/virtual-services/virtual-consultation",
+    chatBot: "/virtual-services/chat-box",
+  },
   findYourShape: {
     root: "/find-your-shape",
     result: "/find-your-shape/result",
   },
+
   mobile: {
     root: "/mobile",
     findYourShape: {

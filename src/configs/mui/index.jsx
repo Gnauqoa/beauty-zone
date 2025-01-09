@@ -1,7 +1,8 @@
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material/styles";
 import PropTypes from "prop-types";
-import { palettes } from "./constants";
+import { palettes } from "../constants";
+import breakpoints from "./breakpoints";
 
 const theme = createTheme({
   palette: palettes,
@@ -11,6 +12,7 @@ const theme = createTheme({
       fontWeight: 600, // Customize typography weight
     },
   },
+  breakpoints: breakpoints,
   components: {
     MuiButton: {
       styleOverrides: {

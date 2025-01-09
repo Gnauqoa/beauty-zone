@@ -15,6 +15,8 @@ import Step2 from "../pages/find-your-shape/mobile/step-2";
 import Step3 from "../pages/find-your-shape/mobile/step-3";
 import { Stack } from "@mui/material";
 import Result from "../pages/find-your-shape/desktop/result";
+import VirtualConsultation from "../pages/virtual-services/virtual-consultation";
+import ChatBot from "../pages/virtual-services/chat-bot";
 
 const RouterProvider = () => {
   return (
@@ -26,8 +28,16 @@ const RouterProvider = () => {
             element={<Stack sx={{ minHeight: "100vh" }} />}
           />
           <Route
-            path={PATH_PAGE.virtualServices}
+            path={PATH_PAGE.virtualServices.root}
             element={<VirtualServices />}
+          />
+          <Route
+            path={PATH_PAGE.virtualServices.virtualConsultation}
+            element={<VirtualConsultation />}
+          />
+          <Route
+            path={PATH_PAGE.virtualServices.chatBot}
+            element={<ChatBot />}
           />
           <Route
             path={PATH_PAGE.findYourShape.root}
