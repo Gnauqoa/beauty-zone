@@ -24,7 +24,7 @@ const VirtualServices = () => {
         <Typography sx={{ fontSize: 24, fontWeight: 400 }}>
           FIND YOUR PERFECT SHAPE WITH A QUICK SELFIE WE’LL DO THE REST
         </Typography>
-        <Link to={PATH_PAGE.findYourShape}>
+        <Link to={PATH_PAGE.findYourShape.root}>
           <Typography
             sx={{ fontSize: 40, fontWeight: 600, textDecoration: "underline" }}
           >
@@ -33,7 +33,7 @@ const VirtualServices = () => {
         </Link>
       </Banner>{" "}
       <Banner imgSrc={bg2}>
-        <Link to={PATH_PAGE.findYourShape}>
+        <Link to={PATH_PAGE.findYourShape.root}>
           <Typography
             sx={{ fontSize: 40, fontWeight: 600, textDecoration: "underline" }}
           >
