@@ -6,12 +6,12 @@ import SendIcon from "@mui/icons-material/Send";
 import CallIcon from "@mui/icons-material/Call";
 
 const chatBotExample = [
-  "Xin chào! Tôi là chuyên viên tư vấn của BeautyZone. Tôi có thể giúp gì cho bạn?",
+  "Xin chào! Tôi là AI tư vấn của BeautyZone. Tôi có thể giúp gì cho bạn?",
   "Tôi đã hiểu vấn đề của bạn. Các sản phẩm sau đây có thể sẽ phù hợp với yêu cầu của bạn:",
 ];
 
 const employeeChatExample = [
-  "Xin chào! Tôi là nhân viên tư vấn của BeautyZone. Tôi có thể giúp gì cho bạn?",
+  "Xin chào! Tôi là chuyên viên tư vấn của BeautyZone. Tôi có thể giúp gì cho bạn?",
   "Tôi đã hiểu yêu cầu của bạn. Các sản phẩm sau đây có thể sẽ phù hợp với yêu cầu của bạn:",
 ];
 
