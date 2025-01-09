@@ -71,6 +71,7 @@ const SubBar = () => {
           position: "absolute",
           top: "120px",
           zIndex: 20,
+          borderTop: "1px solid #8C1C13",
         }}
       >
         <Button

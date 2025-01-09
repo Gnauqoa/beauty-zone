@@ -50,6 +50,27 @@ const ChatBot = () => {
         pt: 5,
       }}
     >
+      {!messages.length && (
+        <div className="flex flex-col gap-3">
+          <Typography sx={{ textAlign: "center", fontSize: 20 }}>
+            Chat để được tư vấn
+          </Typography>
+          <Button
+            variant="outlined"
+            sx={{ mx: "auto", textTransform: "none" }}
+            onClick={() => handleSubmitMessage("Xin chào")}
+          >
+            Xin chào
+          </Button>
+          <Button
+            variant="outlined"
+            sx={{ mx: "auto", textTransform: "none" }}
+            onClick={() => handleSubmitMessage("Tôi cần tư vấn")}
+          >
+            Tôi cần tư vấn
+          </Button>
+        </div>
+      )}
       {messages.map((message, index) => {
         if (message.type === "user")
           return <UserChat key={index} content={message.content} />;

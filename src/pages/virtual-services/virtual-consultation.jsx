@@ -67,7 +67,7 @@ const VirtualConsultation = () => {
               <u>Chat now</u>
             </Typography>
           </Link>
-          <Link>
+          <Link to={`${PATH_PAGE.virtualServices.chatBot}?employee=true`}>
             <Typography
               sx={{
                 fontSize: isMd ? 20 : 48,
