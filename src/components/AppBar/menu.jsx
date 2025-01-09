@@ -8,7 +8,7 @@ import { MenuItem, Stack, Typography } from "@mui/material";
 import { Menu as MuiMenu } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "../../context/auth";
-import SignInModal from "../../routers/auth";
+import SignInModal from "../../pages/auth/auth";
 
 const Menu = () => {
   const { isLogin, login, logout } = useAuth();
