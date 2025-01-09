@@ -6,7 +6,7 @@ const AppBar = () => {
     <Stack
       sx={{
         width: "100%",
-        bgcolor: "#fff",
+        bgcolor: "background.default",
       }}
     >
       <Container>
@@ -16,7 +16,6 @@ const AppBar = () => {
             flexDirection: "row",
             alignItems: "center",
             width: "100%",
-            bgcolor: "#fff",
           }}
         >
           <img className="h-[120px]" src={"/logo.svg"} />

@@ -1,4 +1,4 @@
-import { Container, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import AppBar from "../components/AppBar";
 
@@ -7,7 +7,7 @@ export default function Root() {
     <>
       <Stack
         sx={{
-          bgcolor: "background.default",
+          background: "background.default",
           display: "flex",
           flexDirection: "column",
           width: "100%",
@@ -15,9 +15,8 @@ export default function Root() {
         }}
       >
         <AppBar />
-        <Container>
-          <Outlet />
-        </Container>
+
+        <Outlet />
       </Stack>
     </>
   );
