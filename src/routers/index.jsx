@@ -43,6 +43,8 @@ import Cart from "../pages/Cart/cart-page";
 //     ],
 //   },
 // ]);
+import VirtualConsultation from "../pages/virtual-services/virtual-consultation";
+import ChatBot from "../pages/virtual-services/chat-bot";
 
 const RouterProvider = () => {
   return (

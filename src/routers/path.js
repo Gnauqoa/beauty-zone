@@ -21,6 +21,7 @@ export const PATH_PAGE = {
     productDetail: "/product-detail/:id",
     cart: "/cart",
   },
+
   mobile: {
     root: "/mobile",
     findYourShape: {
