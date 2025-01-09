@@ -58,16 +58,9 @@ const ChatBot = () => {
           <Button
             variant="outlined"
             sx={{ mx: "auto", textTransform: "none" }}
-            onClick={() => handleSubmitMessage("Xin chào")}
+            onClick={() => handleSubmitMessage("Xin chào! Tôi cần được tư vấn")}
           >
-            Xin chào
-          </Button>
-          <Button
-            variant="outlined"
-            sx={{ mx: "auto", textTransform: "none" }}
-            onClick={() => handleSubmitMessage("Tôi cần tư vấn")}
-          >
-            Tôi cần tư vấn
+            Xin chào! Tôi cần được tư vấn
           </Button>
         </div>
       )}
