@@ -12,3 +12,10 @@ body,
 :root {
   --primary-color: #8c1c13;
 }
+html,
+body,
+.root,
+.ion-app,
+.ion-content {
+  background-color: transparent;
+}
