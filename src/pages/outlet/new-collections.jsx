@@ -9,7 +9,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  Collapse,
   Button,
 } from "@mui/material";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
@@ -18,6 +17,7 @@ import Logo2 from "../../assets/image 3.png";
 import ProductImage1 from "../../assets/products/image.png";
 import ProductImage2 from "../../assets/products/image 4.png";
 import { useNavigate } from "react-router-dom";
+import useResponsive from "../../hooks/useResponsive";
 
 function NewCollection() {
   const navigate = useNavigate();
@@ -26,12 +26,12 @@ function NewCollection() {
     "Price: Low to High",
     "Price: High to Low",
   ];
-
+  const isMd = useResponsive("down", "md");
   const handleCollectionClick = (slug) => {
     navigate(`/new-collection/${slug}`);
   };
 
-  const handleSortChange = (event) => {
+  const handleSortChange = () => {
     // Handle Sort Change
   };
   return (
@@ -129,6 +129,7 @@ function NewCollection() {
           flexDirection: "column",
           alignItems: "center",
           px: 0,
+          gap: 5,
         }}
       >
         <Box
@@ -147,23 +148,22 @@ function NewCollection() {
           <img src={Logo} alt="new-collection" />
         </Box>
         <Stack
-          direction="row"
+          direction={isMd ? "column" : "row"}
           justifyContent="left"
           alignItems="center"
-          sx={{ width: "100%", px: 0 }}
+          sx={{ width: "100%", px: 0, overflow: "hidden" }}
         >
           <Box
             position="relative"
             borderRadius="10px"
             overflow="hidden"
-            width="700px"
-            height="100%"
-            sx={{ ml: 0 }}
+            width={isMd ? "100%" : "700px"}
+            sx={{ px: 4 }}
           >
             <img
               src={ProductImage1}
               alt="new-collection"
-              style={{ width: "100%", display: "block" }}
+              style={{ width: "100%", height: "auto", objectFit: "cover" }}
             />
           </Box>
           <Box
@@ -307,34 +307,18 @@ function NewCollection() {
           <img src={Logo2} alt="new-collection" />
         </Box>
         <Stack
-          direction="row"
-          justifyContent="right"
+          direction={isMd ? "column" : "row"}
+          justifyContent={isMd ? "center" : "right"}
           alignItems="center"
-          sx={{ width: "100%", px: 0 }}
+          sx={{ width: "100%", px: 4 }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              fontFamily: "Montserrat",
-              fontSize: "1.25rem",
-            }}
-          >
-            <Typography
-              sx={{
-                fontWeight: "bold",
-                fontSize: "2rem",
-                fontFamily: "Montserrat",
-                maxWidth: "350px",
-                marginRight: "5rem",
-              }}
-            >
-              Klairs Freshly Juiced Vitamin Drop
-            </Typography>
+          {!isMd && (
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
+                fontFamily: "Montserrat",
+                fontSize: "1.25rem",
               }}
             >
               <Typography
@@ -342,78 +326,179 @@ function NewCollection() {
                   fontWeight: "bold",
                   fontSize: "2rem",
                   fontFamily: "Montserrat",
-                  marginRight: "3rem",
-                  marginLeft: "1rem",
-                  color: "#BF4342",
+                  maxWidth: "350px",
                 }}
               >
-                NEW DROP
+                Klairs Freshly Juiced Vitamin Drop
               </Typography>
-              <List
-                sx={{
-                  listStyleType: "disc",
-                  pl: 1,
-                  marginLeft: "6rem",
-                }}
-              >
-                <ListItem
-                  sx={{
-                    py: 0,
-                    display: "list-item",
-                  }}
-                >
-                  <ListItemText
-                    primary="Serum / 35ml"
-                    sx={{
-                      "& .MuiTypography-root": {
-                        fontSize: "1.15rem",
-                        fontFamily: "Montserrat",
-                        fontWeight: "bold",
-                      },
-                    }}
-                  />
-                </ListItem>
-              </List>
               <Box
                 sx={{
                   display: "flex",
-                  justifyContent: "center",
-                  mt: 2,
-                  mr: 20,
+                  flexDirection: "column",
                 }}
               >
-                <Button
-                  variant="contained"
+                <Typography
                   sx={{
-                    backgroundColor: "#BF4342",
-                    maxWidth: "200px",
-                    borderRadius: "20px",
-                    border: "1px solid #000000",
-                    fontSize: "1.25rem",
                     fontWeight: "bold",
+                    fontSize: "2rem",
                     fontFamily: "Montserrat",
-                    color: "#E7D7C1",
+                    color: "#BF4342",
                   }}
                 >
-                  Check out
-                </Button>
+                  NEW DROP
+                </Typography>
+                <List
+                  sx={{
+                    listStyleType: "disc",
+                    pl: 1,
+                  }}
+                >
+                  <ListItem
+                    sx={{
+                      py: 0,
+                      display: "list-item",
+                    }}
+                  >
+                    <ListItemText
+                      primary="Serum / 35ml"
+                      sx={{
+                        "& .MuiTypography-root": {
+                          fontSize: "1.15rem",
+                          fontFamily: "Montserrat",
+                          fontWeight: "bold",
+                        },
+                      }}
+                    />
+                  </ListItem>
+                </List>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    mt: 2,
+                    mr: 20,
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "#BF4342",
+                      maxWidth: "200px",
+                      borderRadius: "20px",
+                      border: "1px solid #000000",
+                      fontSize: "1.25rem",
+                      fontWeight: "bold",
+                      fontFamily: "Montserrat",
+                      color: "#E7D7C1",
+                    }}
+                  >
+                    Check out
+                  </Button>
+                </Box>
               </Box>
             </Box>
-          </Box>
+          )}
           <Box
             position="relative"
             borderRadius="10px"
             overflow="hidden"
-            width="700px"
+            width={isMd ? "100%" : "700px"}
             height="100%"
-            sx={{ ml: 0 }}
+            sx={{ px: 4 }}
           >
             <img
               src={ProductImage2}
               alt="new-collection"
-              style={{ width: "100%", display: "block" }}
+              style={{ width: "100%", height: "auto", objectFit: "cover" }}
             />
           </Box>
+          {isMd && (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                fontFamily: "Montserrat",
+                fontSize: "1.25rem",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: "2rem",
+                  fontFamily: "Montserrat",
+                  maxWidth: "350px",
+                }}
+              >
+                Klairs Freshly Juiced Vitamin Drop
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: "2rem",
+                    fontFamily: "Montserrat",
+
+                    color: "#BF4342",
+                  }}
+                >
+                  NEW DROP
+                </Typography>
+                <List
+                  sx={{
+                    listStyleType: "disc",
+                    pl: 1,
+                  }}
+                >
+                  <ListItem
+                    sx={{
+                      py: 0,
+                      display: "list-item",
+                    }}
+                  >
+                    <ListItemText
+                      primary="Serum / 35ml"
+                      sx={{
+                        "& .MuiTypography-root": {
+                          fontSize: "1.15rem",
+                          fontFamily: "Montserrat",
+                          fontWeight: "bold",
+                        },
+                      }}
+                    />
+                  </ListItem>
+                </List>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    mt: 2,
+                    mr: 20,
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "#BF4342",
+                      maxWidth: "200px",
+                      borderRadius: "20px",
+                      border: "1px solid #000000",
+                      fontSize: "1.25rem",
+                      fontWeight: "bold",
+                      fontFamily: "Montserrat",
+                      color: "#E7D7C1",
+                    }}
+                  >
+                    Check out
+                  </Button>
+                </Box>
+              </Box>
+            </Box>
+          )}
         </Stack>
       </Box>
     </Box>

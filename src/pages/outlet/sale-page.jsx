@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Box,
   Typography,
@@ -112,7 +112,217 @@ const SalePage = () => {
   };
 
   const isMd = useResponsive("down", "md");
-  useEffect(() => {}, [location]);
+  const Filter = () => {
+    return (
+      <Box sx={{ width: "200px", paddingY: 3 }}>
+        <List>
+          {/* All Products option */}
+          <ListItem
+            component="button"
+            onClick={() => handleTypeClick("")}
+            sx={{
+              py: 0,
+              minHeight: "32px",
+              color: selectedType === "" ? "var(--primary-color)" : "inherit",
+            }}
+          >
+            <ListItemText
+              primary="All Products"
+              sx={{
+                margin: 0,
+                "& .MuiTypography-root": {
+                  fontSize: "0.9rem",
+                  fontFamily: "Montserrat",
+                  fontWeight: "bold",
+                },
+              }}
+            />
+          </ListItem>
+
+          {/* Trang Makeup: hiển thị trực tiếp items */}
+          {isMakeupPage && (
+            <List component="div">
+              {productCategories["Make up"].map((item) => (
+                <ListItem
+                  component="button"
+                  key={item}
+                  onClick={() => handleTypeClick(item)}
+                  sx={{
+                    pl: 4,
+                    py: 0,
+                    minHeight: "28px",
+                    color:
+                      selectedType === item
+                        ? "var(--primary-color)"
+                        : "inherit",
+                  }}
+                >
+                  <ListItemText
+                    primary={item}
+                    sx={{
+                      margin: 0,
+                      "& .MuiTypography-root": {
+                        fontSize: "0.9rem",
+                        fontFamily: "Montserrat",
+                        fontWeight: "bold",
+                      },
+                    }}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          )}
+
+          {/* Trang Skincare: hiển thị trực tiếp items */}
+          {isSkincarePage && (
+            <List component="div">
+              {productCategories["Skin cares"].map((item) => (
+                <ListItem
+                  component="button"
+                  key={item}
+                  onClick={() => handleTypeClick(item)}
+                  sx={{
+                    pl: 4,
+                    py: 0,
+                    minHeight: "28px",
+                    color:
+                      selectedType === item
+                        ? "var(--primary-color)"
+                        : "inherit",
+                  }}
+                >
+                  <ListItemText
+                    primary={item}
+                    sx={{
+                      margin: 0,
+                      "& .MuiTypography-root": {
+                        fontSize: "0.9rem",
+                        fontFamily: "Montserrat",
+                        fontWeight: "bold",
+                      },
+                    }}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          )}
+
+          {/* Các trang khác: hiển thị có thể bấm mở rộng */}
+          {!isMakeupPage && !isSkincarePage && (
+            <>
+              <ListItem
+                component="button"
+                onClick={handleMakeupClick}
+                sx={{
+                  py: 0,
+                  minHeight: "32px",
+                }}
+              >
+                <ListItemText
+                  primary="Make up"
+                  sx={{
+                    margin: 0,
+                    minWidth: "80px",
+                    "& .MuiTypography-root": {
+                      fontSize: "0.9rem",
+                      fontFamily: "Montserrat",
+                      fontWeight: "bold",
+                    },
+                  }}
+                />
+                {openMakeup ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={openMakeup} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {productCategories["Make up"].map((item) => (
+                    <ListItem
+                      component="button"
+                      key={item}
+                      onClick={() => handleTypeClick(item)}
+                      sx={{
+                        pl: 4,
+                        py: 0,
+                        minHeight: "28px",
+                        color:
+                          selectedType === item
+                            ? "var(--primary-color)"
+                            : "inherit",
+                      }}
+                    >
+                      <ListItemText
+                        primary={item}
+                        sx={{
+                          margin: 0,
+                          "& .MuiTypography-root": {
+                            fontSize: "0.9rem",
+                            fontFamily: "Montserrat",
+                            fontWeight: "bold",
+                          },
+                        }}
+                      />
+                    </ListItem>
+                  ))}
+                </List>
+              </Collapse>
+
+              <ListItem
+                component="button"
+                onClick={handleSkinCareClick}
+                sx={{ py: 0, minHeight: "32px" }}
+              >
+                <ListItemText
+                  primary="Skin cares"
+                  sx={{
+                    margin: 0,
+                    minWidth: "80px",
+                    "& .MuiTypography-root": {
+                      fontSize: "0.9rem",
+                      fontFamily: "Montserrat",
+                      fontWeight: "bold",
+                    },
+                  }}
+                />
+                {openSkinCare ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={openSkinCare} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {productCategories["Skin cares"].map((item) => (
+                    <ListItem
+                      component="button"
+                      key={item}
+                      onClick={() => handleTypeClick(item)}
+                      sx={{
+                        pl: 4,
+                        py: 0,
+                        minHeight: "28px",
+                        color:
+                          selectedType === item
+                            ? "var(--primary-color)"
+                            : "inherit",
+                      }}
+                    >
+                      <ListItemText
+                        primary={item}
+                        sx={{
+                          margin: 0,
+                          "& .MuiTypography-root": {
+                            fontSize: "0.9rem",
+                            fontFamily: "Montserrat",
+                            fontWeight: "bold",
+                          },
+                        }}
+                      />
+                    </ListItem>
+                  ))}
+                </List>
+              </Collapse>
+            </>
+          )}
+        </List>
+      </Box>
+    );
+  };
+
   return (
     <div className={"flex flex-col bg-[#f5e5d8]"}>
       <Stack direction="row" justifyContent="left" alignItems="center">
@@ -198,217 +408,10 @@ const SalePage = () => {
       </Stack>
       {/* Sidebar */}
       <Box sx={{ display: "flex", flexDirection: "row" }}>
-        {!isMd && (
-          <Box sx={{ width: "200px", paddingY: 3 }}>
-            <List>
-              {/* All Products option */}
-              <ListItem
-                component="button"
-                onClick={() => handleTypeClick("")}
-                sx={{
-                  py: 0,
-                  minHeight: "32px",
-                  color:
-                    selectedType === "" ? "var(--primary-color)" : "inherit",
-                }}
-              >
-                <ListItemText
-                  primary="All Products"
-                  sx={{
-                    margin: 0,
-                    "& .MuiTypography-root": {
-                      fontSize: "0.9rem",
-                      fontFamily: "Montserrat",
-                      fontWeight: "bold",
-                    },
-                  }}
-                />
-              </ListItem>
-
-              {/* Trang Makeup: hiển thị trực tiếp items */}
-              {isMakeupPage && (
-                <List component="div">
-                  {productCategories["Make up"].map((item) => (
-                    <ListItem
-                      component="button"
-                      key={item}
-                      onClick={() => handleTypeClick(item)}
-                      sx={{
-                        pl: 4,
-                        py: 0,
-                        minHeight: "28px",
-                        color:
-                          selectedType === item
-                            ? "var(--primary-color)"
-                            : "inherit",
-                      }}
-                    >
-                      <ListItemText
-                        primary={item}
-                        sx={{
-                          margin: 0,
-                          "& .MuiTypography-root": {
-                            fontSize: "0.9rem",
-                            fontFamily: "Montserrat",
-                            fontWeight: "bold",
-                          },
-                        }}
-                      />
-                    </ListItem>
-                  ))}
-                </List>
-              )}
-
-              {/* Trang Skincare: hiển thị trực tiếp items */}
-              {isSkincarePage && (
-                <List component="div">
-                  {productCategories["Skin cares"].map((item) => (
-                    <ListItem
-                      component="button"
-                      key={item}
-                      onClick={() => handleTypeClick(item)}
-                      sx={{
-                        pl: 4,
-                        py: 0,
-                        minHeight: "28px",
-                        color:
-                          selectedType === item
-                            ? "var(--primary-color)"
-                            : "inherit",
-                      }}
-                    >
-                      <ListItemText
-                        primary={item}
-                        sx={{
-                          margin: 0,
-                          "& .MuiTypography-root": {
-                            fontSize: "0.9rem",
-                            fontFamily: "Montserrat",
-                            fontWeight: "bold",
-                          },
-                        }}
-                      />
-                    </ListItem>
-                  ))}
-                </List>
-              )}
-
-              {/* Các trang khác: hiển thị có thể bấm mở rộng */}
-              {!isMakeupPage && !isSkincarePage && (
-                <>
-                  <ListItem
-                    component="button"
-                    onClick={handleMakeupClick}
-                    sx={{
-                      py: 0,
-                      minHeight: "32px",
-                    }}
-                  >
-                    <ListItemText
-                      primary="Make up"
-                      sx={{
-                        margin: 0,
-                        minWidth: "80px",
-                        "& .MuiTypography-root": {
-                          fontSize: "0.9rem",
-                          fontFamily: "Montserrat",
-                          fontWeight: "bold",
-                        },
-                      }}
-                    />
-                    {openMakeup ? <ExpandLess /> : <ExpandMore />}
-                  </ListItem>
-                  <Collapse in={openMakeup} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      {productCategories["Make up"].map((item) => (
-                        <ListItem
-                          component="button"
-                          key={item}
-                          onClick={() => handleTypeClick(item)}
-                          sx={{
-                            pl: 4,
-                            py: 0,
-                            minHeight: "28px",
-                            color:
-                              selectedType === item
-                                ? "var(--primary-color)"
-                                : "inherit",
-                          }}
-                        >
-                          <ListItemText
-                            primary={item}
-                            sx={{
-                              margin: 0,
-                              "& .MuiTypography-root": {
-                                fontSize: "0.9rem",
-                                fontFamily: "Montserrat",
-                                fontWeight: "bold",
-                              },
-                            }}
-                          />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Collapse>
-
-                  <ListItem
-                    component="button"
-                    onClick={handleSkinCareClick}
-                    sx={{ py: 0, minHeight: "32px" }}
-                  >
-                    <ListItemText
-                      primary="Skin cares"
-                      sx={{
-                        margin: 0,
-                        minWidth: "80px",
-                        "& .MuiTypography-root": {
-                          fontSize: "0.9rem",
-                          fontFamily: "Montserrat",
-                          fontWeight: "bold",
-                        },
-                      }}
-                    />
-                    {openSkinCare ? <ExpandLess /> : <ExpandMore />}
-                  </ListItem>
-                  <Collapse in={openSkinCare} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      {productCategories["Skin cares"].map((item) => (
-                        <ListItem
-                          component="button"
-                          key={item}
-                          onClick={() => handleTypeClick(item)}
-                          sx={{
-                            pl: 4,
-                            py: 0,
-                            minHeight: "28px",
-                            color:
-                              selectedType === item
-                                ? "var(--primary-color)"
-                                : "inherit",
-                          }}
-                        >
-                          <ListItemText
-                            primary={item}
-                            sx={{
-                              margin: 0,
-                              "& .MuiTypography-root": {
-                                fontSize: "0.9rem",
-                                fontFamily: "Montserrat",
-                                fontWeight: "bold",
-                              },
-                            }}
-                          />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Collapse>
-                </>
-              )}
-            </List>
-          </Box>
-        )}
+        {!isMd && <Filter />}
         {/* Product Grid */}
         <Box sx={{ flexGrow: 1, paddingX: 3 }}>
+          {isMd && <Filter />}
           <div
             className={
               isMd
