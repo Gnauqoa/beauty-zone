@@ -17,13 +17,19 @@ import Logo from "../../assets/image 2.png";
 import Logo2 from "../../assets/image 3.png";
 import ProductImage1 from "../../assets/products/image.png";
 import ProductImage2 from "../../assets/products/image 4.png";
+import { useNavigate } from "react-router-dom";
 
 function NewCollection() {
+  const navigate = useNavigate();
   const sortOptions = [
     "Best Selling",
     "Price: Low to High",
     "Price: High to Low",
   ];
+
+  const handleCollectionClick = (slug) => {
+    navigate(`/new-collection/${slug}`);
+  };
 
   const handleSortChange = (event) => {
     // Handle Sort Change
@@ -275,6 +281,9 @@ function NewCollection() {
                     fontFamily: "Montserrat",
                     color: "#E7D7C1",
                   }}
+                  onClick={() =>
+                    handleCollectionClick("glasting-melting-balm-trio-set")
+                  }
                 >
                   Check out
                 </Button>
