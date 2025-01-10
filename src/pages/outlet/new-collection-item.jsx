@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -24,91 +24,51 @@ import ProductImage1 from "../../assets/products/product-img.png";
 import StarIcon from "@mui/icons-material/Star";
 import { useLocation, useNavigate } from "react-router-dom";
 import ProductCard from "../../components/Product/card-content";
+import { productData } from "../../utils/product-data";
 
 const SalePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [filteredProducts, setFilteredProducts] = useState(productData);
+  const [sortType, setSortType] = useState("Best Selling");
 
-  const productImages = [ProductDefault, ProductImage1];
-
-  const [products, setProducts] = useState([
-    {
-      name: "Glasting Melting Balm #Original Series",
-      price: "13.99",
-      originalPrice: "19.99",
-      rating: "4.9",
-      image: productImages,
-    },
-    {
-      name: "Glasting Melting Balm #Original Series",
-      price: "13.99",
-      originalPrice: "19.99",
-      rating: "4.9",
-      image: productImages,
-    },
-    {
-      name: "Glasting Melting Balm #Original Series",
-      price: "13.99",
-      originalPrice: "19.99",
-      rating: "4.9",
-      image: productImages,
-    },
-    {
-      name: "Glasting Melting Balm #Original Series",
-      price: "13.99",
-      originalPrice: "19.99",
-      rating: "4.9",
-      image: productImages,
-    },
-    {
-      name: "Glasting Melting Balm #Original Series",
-      price: "13.99",
-      originalPrice: "19.99",
-      rating: "4.9",
-      image: productImages,
-    },
-    {
-      name: "Glasting Melting Balm #Original Series",
-      price: "13.99",
-      originalPrice: "19.99",
-      rating: "4.9",
-      image: productImages,
-    },
-    {
-      name: "Glasting Melting Balm #Original Series",
-      price: "13.99",
-      originalPrice: "19.99",
-      rating: "4.9",
-      image: productImages,
-    },
-    {
-      name: "Glasting Melting Balm #Original Series",
-      price: "13.99",
-      originalPrice: "19.99",
-      rating: "4.9",
-      image: productImages,
-    },
-  ]);
   const sortOptions = [
     "Best Selling",
     "Price: Low to High",
     "Price: High to Low",
   ];
 
+  // Xử lý sắp xếp
   const handleSortChange = (event) => {
-    // Handle Sort Change
+    const sortValue = event.target.value;
+    setSortType(sortValue);
+
+    let sortedProducts = [...filteredProducts];
+    switch (sortValue) {
+      case "Price: Low to High":
+        sortedProducts.sort(
+          (a, b) => parseFloat(a.price) - parseFloat(b.price)
+        );
+        break;
+      case "Price: High to Low":
+        sortedProducts.sort(
+          (a, b) => parseFloat(b.price) - parseFloat(a.price)
+        );
+        break;
+      case "Best Selling":
+        sortedProducts.sort(
+          (a, b) => parseFloat(b.rating) - parseFloat(a.rating)
+        );
+        break;
+      default:
+        break;
+    }
+
+    setFilteredProducts(sortedProducts);
   };
-  useEffect(() => {
-    console.log(location);
-  }, [location]);
+
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        bgcolor: "#f5e5d8",
-      }}
-    >
+    <Box sx={{ display: "flex", flexDirection: "column", bgcolor: "#f5e5d8" }}>
       <Stack direction="row" justifyContent="left" alignItems="center">
         <Typography
           sx={{
@@ -129,6 +89,7 @@ const SalePage = () => {
             : ""}
         </Typography>
       </Stack>
+
       <Stack
         direction="row"
         justifyContent="space-between"
@@ -146,7 +107,7 @@ const SalePage = () => {
             ml: 2,
           }}
         >
-          {products.length} items
+          {filteredProducts.length} items
         </Typography>
 
         <FormControl
@@ -165,7 +126,7 @@ const SalePage = () => {
           </Typography>
           <Select
             variant="standard"
-            defaultValue={sortOptions[0]}
+            value={sortType}
             onChange={handleSortChange}
             sx={{
               fontSize: "1.25rem",
@@ -185,14 +146,18 @@ const SalePage = () => {
           </Select>
         </FormControl>
       </Stack>
-      <Box sx={{ flexGrow: 1, paddingX: 3, mb: 15 }}>
-        <Grid container spacing={2}>
-          {products.map((product, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-              <ProductCard product={product} />
-            </Grid>
-          ))}
-        </Grid>
+
+      <Box sx={{ display: "flex", flexDirection: "row" }}>
+        {/* Product Grid */}
+        <Box sx={{ flexGrow: 1, paddingX: 3, mb: 15 }}>
+          <Grid container spacing={2}>
+            {filteredProducts.map((product, index) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                <ProductCard product={product} />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
       </Box>
     </Box>
   );

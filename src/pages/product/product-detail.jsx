@@ -29,44 +29,25 @@ import ProductDefault from "../../assets/products/default-product.png";
 import ReviewItem from "../../components/Product/review-item";
 import { useNavigate, useLocation } from "react-router-dom";
 
-function ProductDetail() {
+function ProductDetail({ product }) {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [productData, setProductData] = useState(() => {
+    const savedProduct = localStorage.getItem("selectedProduct");
+    return savedProduct ? JSON.parse(savedProduct) : null;
+  });
+
+  useEffect(() => {
+    console.log(productData);
+  }, [productData]);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [showZoom, setShowZoom] = useState(false);
-  const [images, setImages] = useState([
-    ProductDefault,
-    ProductThumbnail1,
-    ProductThumbnail2,
-    ProductThumbnail3,
-  ]);
+  const [images, setImages] = useState(productData.image || []);
 
   const productImages = [ProductDefault, ProductImage1];
-
-  const values = [
-    {
-      title: "Dewy&Glassy Lip Balm",
-      description:
-        "This melting balm glides on smoothly with a transparent and watery glow on your lips.",
-    },
-    {
-      title: "A Watery Formula Without Greasiness",
-      description:
-        "Our plant-based moisturizing oil leaves lips feeling juicy and healthy, especially good for chapped lips during dry seasons.",
-    },
-    {
-      title: "VEGAN Tinted Balm",
-      description:
-        "Our vegan formula with water-holding system for long-lasting hydration.",
-    },
-    {
-      title: "Vibrant Colors Just For You",
-      description:
-        "Find your signature color with our range of vibrant color options. The romantichic, rom&nd.",
-    },
-  ];
 
   const review = {
     userAvatar: "path_to_avatar",
@@ -79,27 +60,69 @@ function ProductDetail() {
 
   // Xử lý next image
   const handleNextImage = () => {
-    setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    setCurrentImageIndex((prev) => {
+      const nextIndex = prev === images.length - 1 ? 0 : prev + 1;
+      // Tự động scroll thumbnails nếu ảnh hiện tại nằm ngoài vùng nhìn thấy
+      if (nextIndex >= startIndex + visibleThumbnails) {
+        setStartIndex(nextIndex - visibleThumbnails + 1);
+      } else if (nextIndex < startIndex) {
+        setStartIndex(nextIndex);
+      }
+      return nextIndex;
+    });
   };
 
   // Xử lý previous image
   const handlePrevImage = () => {
-    setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    setCurrentImageIndex((prev) => {
+      const nextIndex = prev === 0 ? images.length - 1 : prev - 1;
+      // Tự động scroll thumbnails nếu ảnh hiện tại nằm ngoài vùng nhìn thấy
+      if (nextIndex >= startIndex + visibleThumbnails) {
+        setStartIndex(nextIndex - visibleThumbnails + 1);
+      } else if (nextIndex < startIndex) {
+        setStartIndex(nextIndex);
+      }
+      return nextIndex;
+    });
   };
 
   // Xử lý click vào thumbnail
   const handleThumbnailClick = (index) => {
     setCurrentImageIndex(index);
+    // Đảm bảo thumbnail được chọn nằm trong vùng nhìn thấy
+    if (index >= startIndex + visibleThumbnails) {
+      setStartIndex(index - visibleThumbnails + 1);
+    } else if (index < startIndex) {
+      setStartIndex(index);
+    }
   };
 
   const handleProductCardClick = () => {};
 
   const handleMouseMove = (e) => {
+    // Lấy kích thước và vị trí của container
     const { left, top, width, height } =
       e.currentTarget.getBoundingClientRect();
+
+    // Tính toán vị trí chuột tương đối
     const x = ((e.clientX - left) / width) * 100;
     const y = ((e.clientY - top) / height) * 100;
-    setPosition({ x, y });
+
+    // Kiểm tra xem chuột có nằm trong vùng an toàn (giữa 2 nút)
+    const safeZoneLeft = 60; // px từ mép trái
+    const safeZoneRight = width - 60; // px từ mép phải
+    const mouseX = e.clientX - left;
+
+    if (mouseX > safeZoneLeft && mouseX < safeZoneRight) {
+      setShowZoom(true);
+      setPosition({ x, y });
+    } else {
+      setShowZoom(false);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setShowZoom(false);
   };
 
   // Xử lý khi component unmount
@@ -114,6 +137,36 @@ function ProductDetail() {
     const previousPath =
       localStorage.getItem("previousPath") || "/new-collection";
     navigate(previousPath);
+  };
+
+  // Tính toán số lượng ảnh hiển thị
+  const visibleThumbnails = 3;
+  const [startIndex, setStartIndex] = useState(0);
+
+  // Xử lý next/prev cho thumbnails
+  const handleNextThumbnails = (e) => {
+    e.stopPropagation();
+    if (currentImageIndex < images.length - 1) {
+      setCurrentImageIndex((prev) => prev + 1);
+
+      // Nếu currentImageIndex là phần tử thứ 3 trở đi, dịch chuyển startIndex
+      if (currentImageIndex >= 1) {
+        // 0, 1, 2(thứ 3) -> dịch
+        setStartIndex((prev) => Math.min(prev + 1, images.length));
+      }
+    }
+  };
+
+  const handlePrevThumbnails = (e) => {
+    e.stopPropagation();
+    if (currentImageIndex > 0) {
+      setCurrentImageIndex((prev) => prev - 1);
+
+      // Khi scroll ngược, giảm startIndex nếu currentImage < startIndex + 1
+      if (currentImageIndex <= startIndex + 1) {
+        setStartIndex((prev) => Math.max(prev - 1, 0));
+      }
+    }
   };
 
   return (
@@ -134,7 +187,7 @@ function ProductDetail() {
             <IconButton onClick={handleBackClick}>
               <KeyboardArrowLeftIcon />
             </IconButton>
-            [NEW] Glasting Melting Balm Trio Set
+            {productData.name}
           </Typography>
         </Stack>
         <Stack direction="row" spacing={4}>
@@ -148,14 +201,16 @@ function ProductDetail() {
               }}
             >
               <Box
-                onMouseEnter={() => setShowZoom(true)}
-                onMouseLeave={() => setShowZoom(false)}
+                onMouseEnter={() => setShowZoom(false)}
+                onMouseLeave={handleMouseLeave}
                 onMouseMove={handleMouseMove}
                 sx={{
                   position: "relative",
                   overflow: "hidden",
-                  "&:hover .zoom-icon": {
-                    opacity: 1,
+                  "&:hover": {
+                    "& .navigation-arrows": {
+                      opacity: 1,
+                    },
                   },
                   cursor: "pointer",
                 }}
@@ -175,108 +230,169 @@ function ProductDetail() {
                   }}
                 />
 
+                {/* Navigation Arrows */}
                 <Box
+                  className="navigation-arrows"
                   sx={{
                     position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    backgroundImage: `url(${images[currentImageIndex]})`,
-                    backgroundSize: "200%",
-                    backgroundPosition: `${position.x}% ${position.y}%`,
-                    backgroundRepeat: "no-repeat",
-                    opacity: showZoom ? 1 : 0,
-                    visibility: showZoom ? "visible" : "hidden",
-                    transition:
-                      "all 0.1s ease-out, background-position 0.05s ease-out",
-                    zIndex: 2,
-                    transformOrigin: "center center",
-                    willChange: "background-position, opacity, visibility",
-                  }}
-                />
-
-                <Box
-                  className="zoom-icon"
-                  sx={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    width: "60px",
-                    height: "60px",
-                    backgroundColor: "rgba(255, 255, 255, 0.9)",
-                    borderRadius: "50%",
                     display: "flex",
+                    justifyContent: "space-between",
                     alignItems: "center",
-                    justifyContent: "center",
                     opacity: 0,
                     transition: "opacity 0.3s ease",
-                    zIndex: 1,
-                    "&::before, &::after": {
-                      content: '""',
-                      position: "absolute",
-                      backgroundColor: "#000",
-                    },
-                    "&::before": {
-                      width: "20px",
-                      height: "2px",
-                    },
-                    "&::after": {
-                      width: "2px",
-                      height: "20px",
-                    },
+                    px: 2,
+                    zIndex: 3,
                   }}
-                />
+                >
+                  <IconButton
+                    onClick={handlePrevImage}
+                    sx={{
+                      bgcolor: "rgba(255, 255, 255, 0.8)",
+                      "&:hover": {
+                        bgcolor: "rgba(255, 255, 255, 0.9)",
+                      },
+                      width: 40,
+                      height: 40,
+                      "& .MuiSvgIcon-root": {
+                        fontSize: "1.2rem",
+                        color: "var(--primary-color)",
+                      },
+                    }}
+                  >
+                    <ArrowBackIosIcon />
+                  </IconButton>
+
+                  <IconButton
+                    onClick={handleNextImage}
+                    sx={{
+                      bgcolor: "rgba(255, 255, 255, 0.8)",
+                      "&:hover": {
+                        bgcolor: "rgba(255, 255, 255, 0.9)",
+                      },
+                      width: 40,
+                      height: 40,
+                      "& .MuiSvgIcon-root": {
+                        fontSize: "1.2rem",
+                        color: "var(--primary-color)",
+                      },
+                    }}
+                  >
+                    <ArrowForwardIosIcon />
+                  </IconButton>
+                </Box>
+
+                {/* Zoom overlay */}
+                {showZoom && (
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      backgroundImage: `url(${images[currentImageIndex]})`,
+                      backgroundSize: "200%",
+                      backgroundPosition: `${position.x}% ${position.y}%`,
+                      backgroundRepeat: "no-repeat",
+                      opacity: 1,
+                      transition: "background-position 0.05s ease-out",
+                      zIndex: 2,
+                      transformOrigin: "center center",
+                      willChange: "background-position",
+                    }}
+                  />
+                )}
               </Box>
             </Box>
 
             {/* Thumbnail Navigation */}
-            <Stack direction="row" spacing={1} alignItems="center">
-              <IconButton onClick={handlePrevImage}>
+            <Stack
+              direction="row"
+              spacing={1}
+              alignItems="center"
+              sx={{ mt: 2 }}
+            >
+              <IconButton
+                onClick={handlePrevThumbnails}
+                disabled={currentImageIndex === 0}
+                sx={{
+                  color: "var(--primary-color)",
+                  "&.Mui-disabled": {
+                    color: "rgba(191, 67, 66, 0.3)",
+                  },
+                }}
+              >
                 <ArrowBackIosIcon />
               </IconButton>
+
               <Box
                 sx={{
                   display: "flex",
                   gap: 1,
                   overflow: "hidden",
+                  width: `${
+                    100 * Math.min(visibleThumbnails, images.length)
+                  }px`,
+                  transition: "transform 0.3s ease",
                 }}
               >
-                {images.map((img, index) => (
-                  <Box
-                    key={index}
-                    onClick={() => handleThumbnailClick(index)}
-                    sx={{
-                      width: 100,
-                      height: 100,
-                      borderRadius: "10px",
-                      overflow: "hidden",
-                      cursor: "pointer",
-                      border:
-                        currentImageIndex === index
-                          ? "2px solid var(--primary-color)"
-                          : "2px solid transparent",
-                      opacity: currentImageIndex === index ? 1 : 0.7,
-                      transition: "all 0.3s ease",
-                      "&:hover": {
-                        opacity: 1,
-                      },
-                    }}
-                  >
-                    <img
-                      src={images[index]}
-                      alt={`Thumbnail ${index + 1}`}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "fill",
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  sx={{
+                    transform: `translateX(-${startIndex * 104}px)`,
+                    transition: "transform 0.3s ease",
+                  }}
+                >
+                  {images.map((img, index) => (
+                    <Box
+                      key={index}
+                      onClick={() => handleThumbnailClick(index)}
+                      sx={{
+                        minWidth: 100,
+                        height: 100,
+                        borderRadius: "10px",
+                        overflow: "hidden",
+                        cursor: "pointer",
+                        border:
+                          currentImageIndex === index
+                            ? "2px solid var(--primary-color)"
+                            : "2px solid transparent",
+                        opacity: currentImageIndex === index ? 1 : 0.7,
+                        transition: "all 0.3s ease",
+                        "&:hover": {
+                          opacity: 1,
+                        },
                       }}
-                    />
-                  </Box>
-                ))}
+                    >
+                      <img
+                        src={img}
+                        alt={`Thumbnail ${index + 1}`}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    </Box>
+                  ))}
+                </Stack>
               </Box>
-              <IconButton onClick={handleNextImage}>
+
+              <IconButton
+                onClick={handleNextThumbnails}
+                disabled={currentImageIndex === images.length - 1}
+                sx={{
+                  color: "var(--primary-color)",
+                  "&.Mui-disabled": {
+                    color: "rgba(191, 67, 66, 0.3)",
+                  },
+                }}
+              >
                 <ArrowForwardIosIcon />
               </IconButton>
             </Stack>
@@ -295,12 +411,11 @@ function ProductDetail() {
                 color: "#BF4342",
               }}
             >
-              [NEW] Glasting Melting Balm Trio Set (05 Nougat Sand + 06 Kaya Fig
-              + 07 Mauve Whip)
+              {productData.name}
             </Typography>
 
             <Box sx={{ mb: 3 }}>
-              <Typography
+              {/* <Typography
                 variant="h6"
                 sx={{
                   color: "#BF4342",
@@ -370,31 +485,33 @@ function ProductDetail() {
                     }}
                   />
                 </ListItem>
-              </List>
-              <Stack direction="column" spacing={1}>
-                {values.map((value, index) => (
-                  <Typography
-                    variant="div"
-                    sx={{
-                      color: "black",
-                      mb: 1,
-                      fontFamily: "Montserrat",
-                      fontWeight: "medium",
-                      fontSize: "1.25rem",
-                    }}
-                  >
-                    [
-                    <Typography variant="span" sx={{ color: "#BF4342" }}>
-                      {value.title}
+              </List> */}
+              {productData.usage && (
+                <Stack direction="column" spacing={1}>
+                  {productData.usage.map((value, index) => (
+                    <Typography
+                      variant="div"
+                      sx={{
+                        color: "black",
+                        mb: 1,
+                        fontFamily: "Montserrat",
+                        fontWeight: "medium",
+                        fontSize: "1.25rem",
+                      }}
+                    >
+                      [
+                      <Typography variant="span" sx={{ color: "#BF4342" }}>
+                        {value.name}
+                      </Typography>
+                      ] {value.description}
                     </Typography>
-                    ] {value.description}
-                  </Typography>
-                ))}
-              </Stack>
+                  ))}
+                </Stack>
+              )}
             </Box>
 
             <Typography variant="h4" sx={{ fontWeight: "bold", mb: 3 }}>
-              $29.99 USD
+              {productData.price} USD
             </Typography>
 
             <Stack direction="row" spacing={2}>
@@ -459,54 +576,25 @@ function ProductDetail() {
               ml: 2,
             }}
           >
-            <ListItem
-              sx={{
-                display: "list-item",
-                py: 0.5,
-              }}
-            >
-              <ListItemText
-                primary="Vegan"
+            {productData.featured.map((value, index) => (
+              <ListItem
+                key={index}
                 sx={{
-                  "& .MuiTypography-root": {
-                    fontFamily: "Montserrat",
-                    fontSize: "1.1rem",
-                  },
+                  display: "list-item",
+                  py: 0.5,
                 }}
-              />
-            </ListItem>
-            <ListItem
-              sx={{
-                display: "list-item",
-                py: 0.5,
-              }}
-            >
-              <ListItemText
-                primary="A vibrant color balm that spreads vivid color as soon as it is applied"
-                sx={{
-                  "& .MuiTypography-root": {
-                    fontFamily: "Montserrat",
-                    fontSize: "1.1rem",
-                  },
-                }}
-              />
-            </ListItem>
-            <ListItem
-              sx={{
-                display: "list-item",
-                py: 0.5,
-              }}
-            >
-              <ListItemText
-                primary="Water holding system forms a highly moisturizing protective film to block moisture from escaping with its elastic texture."
-                sx={{
-                  "& .MuiTypography-root": {
-                    fontFamily: "Montserrat",
-                    fontSize: "1.1rem",
-                  },
-                }}
-              />
-            </ListItem>
+              >
+                <ListItemText
+                  primary={value}
+                  sx={{
+                    "& .MuiTypography-root": {
+                      fontFamily: "Montserrat",
+                      fontSize: "1.1rem",
+                    },
+                  }}
+                />
+              </ListItem>
+            ))}
           </List>
         </Box>
 
@@ -534,40 +622,26 @@ function ProductDetail() {
           >
             Suggested Use
           </Typography>
-          <List sx={{}}>
-            <ListItem sx={{}}>
-              <ListItemText
-                primary="Apply gently to the lips."
+          <List sx={{ fontFamily: "Montserrat" }}>
+            {productData.suggestedUse.map((value, index) => (
+              <ListItem
+                key={index}
                 sx={{
-                  "& .MuiTypography-root": {
-                    fontFamily: "Montserrat",
-                    fontSize: "1.1rem",
-                  },
+                  py: 0.5,
+                  display: "list-item",
                 }}
-              />
-            </ListItem>
-            <ListItem sx={{}}>
-              <ListItemText
-                primary="Use only a small amount, as it may break if you raise or lower a large amount."
-                sx={{
-                  "& .MuiTypography-root": {
-                    fontFamily: "Montserrat",
-                    fontSize: "1.1rem",
-                  },
-                }}
-              />
-            </ListItem>
-            <ListItem sx={{}}>
-              <ListItemText
-                primary="Store in a place with little light exposure, as the color may change when exposed to strong light (sunlight, fluorescent light, store lighting, etc.) for a long time; avoid storage at high temperatures and below freezing."
-                sx={{
-                  "& .MuiTypography-root": {
-                    fontFamily: "Montserrat",
-                    fontSize: "1.1rem",
-                  },
-                }}
-              />
-            </ListItem>
+              >
+                <ListItemText
+                  primary={value}
+                  sx={{
+                    "& .MuiTypography-root": {
+                      fontFamily: "Montserrat",
+                      fontSize: "1rem",
+                    },
+                  }}
+                />
+              </ListItem>
+            ))}
           </List>
         </Box>
 

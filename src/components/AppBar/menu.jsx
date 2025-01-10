@@ -9,6 +9,8 @@ import { Menu as MuiMenu } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "../../context/auth";
 import SignInModal from "../../pages/auth/auth";
+import { useNavigate } from "react-router-dom";
+import { PATH_PAGE } from "../../routers/path";
 
 const Menu = () => {
   const { isLogin, login, logout } = useAuth();
@@ -22,6 +24,11 @@ const Menu = () => {
     setAnchorEl(null);
   };
 
+  const navigate = useNavigate();
+  const handleCart = () => {
+    console.log(PATH_PAGE.outlet.cart);
+    navigate(PATH_PAGE.outlet.cart);
+  };
   return (
     <Stack
       sx={{
@@ -76,7 +83,10 @@ const Menu = () => {
       )}
       <SearchOutlined sx={{ width: 40 }} />
       <FavoriteBorderOutlined sx={{ width: 40 }} />
-      <ShoppingBagOutlined sx={{ width: 40 }} />
+      <ShoppingBagOutlined
+        sx={{ width: 40, cursor: "pointer" }}
+        onClick={handleCart}
+      />
       <PersonOutline sx={{ width: 40 }} />
       <SignInModal />
     </Stack>
