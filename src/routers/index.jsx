@@ -17,6 +17,30 @@ import { Stack } from "@mui/material";
 import Result from "../pages/find-your-shape/desktop/result";
 import VirtualConsultation from "../pages/virtual-services/virtual-consultation";
 import ChatBot from "../pages/virtual-services/chat-bot";
+import SalePage from "../pages/outlet/sale-page";
+import NewCollection from "../pages/outlet/new-collections";
+
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <Root />,
+//     errorElement: <ErrorPage />,
+//     children: [
+//       {
+//         path: "contacts/:contactId",
+//         element: <Contact />,
+//       },
+//       {
+//         path: PATH_PAGE.virtualServices,
+//         element: <VirtualServices />,
+//       },
+//       {
+//         path: "sale",
+//         element: <SalePage />,
+//       },
+//     ],
+//   },
+// ]);
 
 const RouterProvider = () => {
   return (
@@ -44,6 +68,15 @@ const RouterProvider = () => {
             element={<FindYourShape />}
           />
           <Route path={PATH_PAGE.findYourShape.result} element={<Result />} />
+          <Route path={PATH_PAGE.outlet.sale} element={<SalePage />} />
+          <Route path={PATH_PAGE.outlet.new} element={<SalePage />} />
+          <Route path={PATH_PAGE.outlet.bestSeller} element={<SalePage />} />
+          <Route path={PATH_PAGE.outlet.makeup} element={<SalePage />} />
+          <Route path={PATH_PAGE.outlet.skincare} element={<SalePage />} />
+          <Route
+            path={PATH_PAGE.outlet.newCollection}
+            element={<NewCollection />}
+          />
           <Route path="*" element={<Navigate to={PATH_PAGE.main} />} />
         </Route>
 

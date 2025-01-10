@@ -9,3 +9,6 @@ body,
 .ion-content {
   background-color: transparent;
 }
+:root {
+  --primary-color: #8c1c13;
+}

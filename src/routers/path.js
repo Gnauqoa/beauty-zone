@@ -10,6 +10,14 @@ export const PATH_PAGE = {
     result: "/find-your-shape/result",
   },
 
+  outlet: {
+    sale: "/sale",
+    new: "/new",
+    bestSeller: "/best-sellers",
+    makeup: "/makeup",
+    skincare: "/skincare",
+    newCollection: "/new-collection",
+  },
   mobile: {
     root: "/mobile",
     findYourShape: {
