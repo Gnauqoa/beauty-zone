@@ -24,7 +24,7 @@ import ProductImage1 from "../../assets/products/product-img.png";
 import StarIcon from "@mui/icons-material/Star";
 import { useLocation, useNavigate } from "react-router-dom";
 import ProductCard from "../../components/Product/card-content";
-
+import { productData } from "../../utils/product-data";
 const SalePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -33,70 +33,14 @@ const SalePage = () => {
   const [openMakeup, setOpenMakeup] = useState(false);
   const [openSkinCare, setOpenSkinCare] = useState(false);
   const [pathname, setPathname] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState(productData);
+  const [sortType, setSortType] = useState("Best Selling");
+  const [selectedType, setSelectedType] = useState("");
 
-  const productImages = [ProductDefault, ProductImage1];
-
-  const [products, setProducts] = useState([
-    {
-      name: "Glasting Melting Balm #Original Series",
-      price: "13.99",
-      originalPrice: "19.99",
-      rating: "4.9",
-      image: productImages,
-    },
-    {
-      name: "Glasting Melting Balm #Original Series",
-      price: "13.99",
-      originalPrice: "19.99",
-      rating: "4.9",
-      image: productImages,
-    },
-    {
-      name: "Glasting Melting Balm #Original Series",
-      price: "13.99",
-      originalPrice: "19.99",
-      rating: "4.9",
-      image: productImages,
-    },
-    {
-      name: "Glasting Melting Balm #Original Series",
-      price: "13.99",
-      originalPrice: "19.99",
-      rating: "4.9",
-      image: productImages,
-    },
-    {
-      name: "Glasting Melting Balm #Original Series",
-      price: "13.99",
-      originalPrice: "19.99",
-      rating: "4.9",
-      image: productImages,
-    },
-    {
-      name: "Glasting Melting Balm #Original Series",
-      price: "13.99",
-      originalPrice: "19.99",
-      rating: "4.9",
-      image: productImages,
-    },
-    {
-      name: "Glasting Melting Balm #Original Series",
-      price: "13.99",
-      originalPrice: "19.99",
-      rating: "4.9",
-      image: productImages,
-    },
-    {
-      name: "Glasting Melting Balm #Original Series",
-      price: "13.99",
-      originalPrice: "19.99",
-      rating: "4.9",
-      image: productImages,
-    },
-  ]);
   const handleMakeupClick = () => {
     setOpenMakeup(!openMakeup);
   };
+
   const handleSkinCareClick = () => {
     setOpenSkinCare(!openSkinCare);
   };
@@ -112,9 +56,98 @@ const SalePage = () => {
     "Price: High to Low",
   ];
 
+  // Xử lý sắp xếp sản phẩm
   const handleSortChange = (event) => {
-    // Handle Sort Change
+    const sortValue = event.target.value;
+    setSortType(sortValue);
+
+    let sortedProducts = [...filteredProducts];
+    switch (sortValue) {
+      case "Price: Low to High":
+        sortedProducts.sort(
+          (a, b) => parseFloat(a.price) - parseFloat(b.price)
+        );
+        break;
+      case "Price: High to Low":
+        sortedProducts.sort(
+          (a, b) => parseFloat(b.price) - parseFloat(a.price)
+        );
+        break;
+      case "Best Selling":
+        sortedProducts.sort(
+          (a, b) => parseFloat(b.rating) - parseFloat(a.rating)
+        );
+        break;
+      default:
+        break;
+    }
+
+    setFilteredProducts(sortedProducts);
   };
+
+  // Xử lý click vào category từ sidebar
+  const handleCategoryClick = (category) => {
+    let filtered = category
+      ? productData.filter((product) => product.type === category)
+      : productData;
+
+    // Áp dụng lại sort hiện tại
+    const sortedFiltered = [...filtered];
+    switch (sortType) {
+      case "Price: Low to High":
+        sortedFiltered.sort(
+          (a, b) => parseFloat(a.price) - parseFloat(b.price)
+        );
+        break;
+      case "Price: High to Low":
+        sortedFiltered.sort(
+          (a, b) => parseFloat(b.price) - parseFloat(a.price)
+        );
+        break;
+      case "Best Selling":
+        sortedFiltered.sort(
+          (a, b) => parseFloat(b.rating) - parseFloat(a.rating)
+        );
+        break;
+      default:
+        break;
+    }
+
+    setFilteredProducts(sortedFiltered);
+  };
+
+  // Xử lý click vào type từ sidebar
+  const handleTypeClick = (type) => {
+    setSelectedType(type);
+    let filtered = type
+      ? productData.filter((product) => product.type === type)
+      : productData;
+
+    // Áp dụng sort hiện tại cho kết quả lọc
+    const sortedFiltered = [...filtered];
+    switch (sortType) {
+      case "Price: Low to High":
+        sortedFiltered.sort(
+          (a, b) => parseFloat(a.price) - parseFloat(b.price)
+        );
+        break;
+      case "Price: High to Low":
+        sortedFiltered.sort(
+          (a, b) => parseFloat(b.price) - parseFloat(a.price)
+        );
+        break;
+      case "Best Selling":
+        sortedFiltered.sort(
+          (a, b) => parseFloat(b.rating) - parseFloat(a.rating)
+        );
+        break;
+      default:
+        break;
+    }
+
+    setFilteredProducts(sortedFiltered);
+  };
+
   useEffect(() => {
     setPathname(location.pathname);
   }, [location]);
@@ -160,19 +193,22 @@ const SalePage = () => {
         sx={{
           borderTop: "1px solid #A78A7F",
           borderBottom: "1px solid #A78A7F",
+          py: 2,
+          px: 3,
         }}
       >
-        <Typography
-          sx={{
-            fontSize: "1.25rem",
-            fontWeight: "bold",
-            fontFamily: "Montserrat",
-            ml: 2,
-          }}
-        >
-          {products.length} items
-        </Typography>
+        <Typography>{filteredProducts.length} items</Typography>
 
+        {/* <FormControl variant="standard" sx={{ minWidth: 120 }}>
+          <InputLabel>Sort By</InputLabel>
+          <Select value={sortType} onChange={handleSortChange}>
+            {sortOptions.map((option) => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl> */}
         <FormControl
           variant="standard"
           sx={{ minWidth: 120, display: "flex", flexDirection: "row" }}
@@ -189,7 +225,7 @@ const SalePage = () => {
           </Typography>
           <Select
             variant="standard"
-            defaultValue={sortOptions[0]}
+            value={sortType}
             onChange={handleSortChange}
             sx={{
               fontSize: "1.25rem",
@@ -213,6 +249,29 @@ const SalePage = () => {
       <Box sx={{ display: "flex", flexDirection: "row" }}>
         <Box sx={{ width: "200px", paddingY: 3 }}>
           <List>
+            {/* All Products option */}
+            <ListItem
+              component="button"
+              onClick={() => handleTypeClick("")}
+              sx={{
+                py: 0,
+                minHeight: "32px",
+                color: selectedType === "" ? "var(--primary-color)" : "inherit",
+              }}
+            >
+              <ListItemText
+                primary="All Products"
+                sx={{
+                  margin: 0,
+                  "& .MuiTypography-root": {
+                    fontSize: "0.9rem",
+                    fontFamily: "Montserrat",
+                    fontWeight: "bold",
+                  },
+                }}
+              />
+            </ListItem>
+
             {/* Trang Makeup: hiển thị trực tiếp items */}
             {isMakeupPage && (
               <List component="div">
@@ -220,10 +279,15 @@ const SalePage = () => {
                   <ListItem
                     component="button"
                     key={item}
+                    onClick={() => handleTypeClick(item)}
                     sx={{
                       pl: 4,
                       py: 0,
                       minHeight: "28px",
+                      color:
+                        selectedType === item
+                          ? "var(--primary-color)"
+                          : "inherit",
                     }}
                   >
                     <ListItemText
@@ -249,10 +313,15 @@ const SalePage = () => {
                   <ListItem
                     component="button"
                     key={item}
+                    onClick={() => handleTypeClick(item)}
                     sx={{
                       pl: 4,
                       py: 0,
                       minHeight: "28px",
+                      color:
+                        selectedType === item
+                          ? "var(--primary-color)"
+                          : "inherit",
                     }}
                   >
                     <ListItemText
@@ -302,10 +371,15 @@ const SalePage = () => {
                       <ListItem
                         component="button"
                         key={item}
+                        onClick={() => handleTypeClick(item)}
                         sx={{
                           pl: 4,
                           py: 0,
                           minHeight: "28px",
+                          color:
+                            selectedType === item
+                              ? "var(--primary-color)"
+                              : "inherit",
                         }}
                       >
                         <ListItemText
@@ -349,10 +423,15 @@ const SalePage = () => {
                       <ListItem
                         component="button"
                         key={item}
+                        onClick={() => handleTypeClick(item)}
                         sx={{
                           pl: 4,
                           py: 0,
                           minHeight: "28px",
+                          color:
+                            selectedType === item
+                              ? "var(--primary-color)"
+                              : "inherit",
                         }}
                       >
                         <ListItemText
@@ -360,9 +439,9 @@ const SalePage = () => {
                           sx={{
                             margin: 0,
                             "& .MuiTypography-root": {
-                              fontSize: "1rem",
-                              fontWeight: "bold",
+                              fontSize: "0.9rem",
                               fontFamily: "Montserrat",
+                              fontWeight: "bold",
                             },
                           }}
                         />
@@ -378,16 +457,8 @@ const SalePage = () => {
         {/* Product Grid */}
         <Box sx={{ flexGrow: 1, paddingX: 3 }}>
           <Grid container spacing={2}>
-            {products.map((product, index) => (
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                md={4}
-                lg={3}
-                key={index}
-                onClick={() => navigate(`/product-detail/${index}`)}
-              >
+            {filteredProducts.map((product, index) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
                 <ProductCard product={product} pathname={location.pathname} />
               </Grid>
             ))}

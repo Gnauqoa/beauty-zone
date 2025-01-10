@@ -19,6 +19,7 @@ import SalePage from "../pages/outlet/sale-page";
 import NewCollection from "../pages/outlet/new-collections";
 import ProductDetail from "../pages/product/product-detail";
 import NewCollectionItem from "../pages/outlet/new-collection-item";
+import Cart from "../pages/Cart/cart-page";
 // const router = createBrowserRouter([
 //   {
 //     path: "/",
@@ -72,6 +73,7 @@ const RouterProvider = () => {
             path={PATH_PAGE.outlet.newCollectionItem}
             element={<NewCollectionItem />}
           />
+          <Route path={PATH_PAGE.outlet.cart} element={<Cart />} />
           <Route
             path={PATH_PAGE.outlet.productDetail}
             element={<ProductDetail />}

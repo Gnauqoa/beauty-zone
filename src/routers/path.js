@@ -14,6 +14,7 @@ export const PATH_PAGE = {
     newCollection: "/new-collection",
     newCollectionItem: "/new-collection/:slug",
     productDetail: "/product-detail/:id",
+    cart: "/cart",
   },
   mobile: {
     root: "/mobile",

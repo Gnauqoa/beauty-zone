@@ -11,9 +11,13 @@ const ProductCard = ({ product }) => {
 
   const handleCardClick = () => {
     localStorage.setItem("previousPath", location.pathname);
-
-    navigate(`/product-detail/${product.id}`);
+    localStorage.setItem("selectedProduct", JSON.stringify(product));
+    navigate(`/product-detail/${product.slug}`);
   };
+
+  useEffect(() => {
+    console.log(product);
+  }, [product]);
 
   const handleIconClick = (e) => {
     e.stopPropagation();
@@ -38,6 +42,7 @@ const ProductCard = ({ product }) => {
           position: "relative",
           borderRadius: "30px",
           overflow: "visible",
+
           backgroundColor: "var(--primary-color)",
           padding: "10px",
         }}
@@ -48,6 +53,7 @@ const ProductCard = ({ product }) => {
             borderRadius: "20px",
             borderBottom: "40px solid var(--primary-color)",
             overflow: "hidden",
+
             position: "relative",
             "&:hover .hover-image": {
               opacity: 1,
@@ -60,6 +66,7 @@ const ProductCard = ({ product }) => {
             alt={product.name}
             style={{
               width: "100%",
+              minHeight: "294px",
               display: "block",
             }}
           />
@@ -74,7 +81,7 @@ const ProductCard = ({ product }) => {
               top: 0,
               left: 0,
               width: "100%",
-              height: "100%",
+              minHeight: "294px",
               objectFit: "cover",
               opacity: 0,
               visibility: "hidden",

@@ -22,12 +22,23 @@ import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const SignInModal = () => {
   const [open, setOpen] = useState(false);
   const [isSignIn, setIsSignIn] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState(() => {
+    const userStr = localStorage.getItem("user");
+    return userStr ? JSON.parse(userStr) : null;
+  });
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
@@ -47,6 +58,69 @@ const SignInModal = () => {
   };
 
   const toggleMode = () => setIsSignIn((prev) => !prev);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Thêm tài khoản test
+  const MOCK_USER = {
+    email: "thien@gmail.com",
+    password: "123456",
+    name: "Test User",
+    id: 1,
+  };
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
+
+    try {
+      if (!formData.email || !formData.password) {
+        setError("Please fill in all fields");
+        return;
+      }
+
+      // Giả lập API delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Kiểm tra credentials
+      if (
+        formData.email === MOCK_USER.email &&
+        formData.password === MOCK_USER.password
+      ) {
+        // Tạo mock token
+        const mockToken = "mock-jwt-" + Date.now();
+
+        const userData = {
+          id: MOCK_USER.id,
+          email: MOCK_USER.email,
+          name: MOCK_USER.name,
+        };
+
+        localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem("token", mockToken);
+
+        // Cập nhật state currentUser
+        setCurrentUser(userData);
+
+        handleClose();
+        setFormData({ email: "", password: "" });
+      } else {
+        throw new Error("Invalid email or password");
+      }
+    } catch (err) {
+      setError(err.message || "Login failed. Please try again.");
+      console.error("Login error:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const renderSignUpForm = () => (
     <>
@@ -229,15 +303,15 @@ const SignInModal = () => {
   return (
     <Box>
       <Typography
-        onClick={handleOpen}
+        onClick={currentUser ? null : handleOpen}
         sx={{
           fontSize: 18,
-          cursor: "pointer",
+          cursor: currentUser ? "default" : "pointer",
           fontFamily: "Montserrat",
           color: "#000",
         }}
       >
-        SIGN IN
+        {currentUser ? `Hello, ${currentUser.name}` : "SIGN IN"}
       </Typography>
       <Modal
         open={open}
@@ -285,6 +359,8 @@ const SignInModal = () => {
                 Welcome back!
               </Typography>
               <Box
+                component="form"
+                onSubmit={handleSignIn}
                 sx={{
                   bgcolor: "rgba(140,28,19,0.2)",
                   padding: 2,
@@ -293,12 +369,20 @@ const SignInModal = () => {
                   boxShadow: "inset 0px 0px 3px 0px rgba(0,0,0,0.1)",
                 }}
               >
+                {error && (
+                  <Typography color="error" variant="body2" sx={{ mb: 2 }}>
+                    {error}
+                  </Typography>
+                )}
                 <TextField
                   fullWidth
                   label="Email/Phone Number"
                   variant="outlined"
                   margin="normal"
                   size="small"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: "10px",
@@ -312,6 +396,9 @@ const SignInModal = () => {
                   margin="normal"
                   size="small"
                   type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: "10px",
@@ -347,6 +434,23 @@ const SignInModal = () => {
                     Forgot Password?
                   </Link>
                 </Box>
+
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  disabled={isLoading}
+                  sx={{
+                    mt: 2,
+                    bgcolor: "#8C1C13",
+                    borderRadius: "10px",
+                    "&:hover": {
+                      bgcolor: "#6b150f",
+                    },
+                  }}
+                >
+                  {isLoading ? "Signing in..." : "Sign In"}
+                </Button>
               </Box>
             </>
           ) : (
