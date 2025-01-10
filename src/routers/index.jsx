@@ -15,7 +15,6 @@ import Step2 from "../pages/find-your-shape/mobile/step-2";
 import Step3 from "../pages/find-your-shape/mobile/step-3";
 import { Stack } from "@mui/material";
 import Result from "../pages/find-your-shape/desktop/result";
-import VirtualConsultation from "../pages/virtual-services/virtual-consultation";
 import ChatBot from "../pages/virtual-services/chat-bot";
 import SalePage from "../pages/outlet/sale-page";
 import NewCollection from "../pages/outlet/new-collections";
@@ -44,7 +43,6 @@ import Cart from "../pages/Cart/cart-page";
 //   },
 // ]);
 import VirtualConsultation from "../pages/virtual-services/virtual-consultation";
-import ChatBot from "../pages/virtual-services/chat-bot";
 
 const RouterProvider = () => {
   return (
