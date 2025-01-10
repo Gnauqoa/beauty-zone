@@ -27,8 +27,6 @@ const ListTab = [
     label: "SKINCARE",
     href: "/skincare",
   },
-  { label: "SKINCARE", href: "/skincare" },
-
   {
     label: "VIRTUAL SERVICES",
     href: "/virtual-services",
@@ -43,7 +41,6 @@ const SubBar = () => {
   return (
     <Stack
       sx={{
-        py: 1,
         bgcolor: "secondary.main",
       }}
     >
@@ -53,8 +50,7 @@ const SubBar = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
-            alignItems: "center",
-            py: 1,
+            gap: 1,
             bgcolor: "secondary.main",
           }}
         >

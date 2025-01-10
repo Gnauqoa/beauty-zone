@@ -30,9 +30,9 @@ const AppBar = () => {
               blooms and self-love reigns.
             </i>
           </Typography>
-          <Menu />{" "}
+          <Menu />
         </Stack>
-      </Container>{" "}
+      </Container>
       <SubBar />
     </Stack>
   );
