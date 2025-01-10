@@ -19,7 +19,8 @@ import VirtualConsultation from "../pages/virtual-services/virtual-consultation"
 import ChatBot from "../pages/virtual-services/chat-bot";
 import SalePage from "../pages/outlet/sale-page";
 import NewCollection from "../pages/outlet/new-collections";
-
+import ProductDetail from "../pages/product/product-detail";
+import NewCollectionItem from "../pages/outlet/new-collection-item";
 // const router = createBrowserRouter([
 //   {
 //     path: "/",
@@ -76,6 +77,14 @@ const RouterProvider = () => {
           <Route
             path={PATH_PAGE.outlet.newCollection}
             element={<NewCollection />}
+          />
+          <Route
+            path={PATH_PAGE.outlet.newCollectionItem}
+            element={<NewCollectionItem />}
+          />
+          <Route
+            path={PATH_PAGE.outlet.productDetail}
+            element={<ProductDetail />}
           />
           <Route path="*" element={<Navigate to={PATH_PAGE.main} />} />
         </Route>

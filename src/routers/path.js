@@ -17,6 +17,8 @@ export const PATH_PAGE = {
     makeup: "/makeup",
     skincare: "/skincare",
     newCollection: "/new-collection",
+    newCollectionItem: "/new-collection/:slug",
+    productDetail: "/product-detail/:id",
   },
   mobile: {
     root: "/mobile",

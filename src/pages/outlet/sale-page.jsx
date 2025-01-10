@@ -19,16 +19,22 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { IconButton } from "@mui/material";
-import ProductImage from "../../assets/products/product-image.png";
+import ProductDefault from "../../assets/products/default-product.png";
+import ProductImage1 from "../../assets/products/product-img.png";
 import StarIcon from "@mui/icons-material/Star";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import ProductCard from "../../components/Product/card-content";
 
 const SalePage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const isMakeupPage = location.pathname === "/makeup";
   const isSkincarePage = location.pathname === "/skincare";
   const [openMakeup, setOpenMakeup] = useState(false);
   const [openSkinCare, setOpenSkinCare] = useState(false);
+  const [pathname, setPathname] = useState("");
+
+  const productImages = [ProductDefault, ProductImage1];
 
   const [products, setProducts] = useState([
     {
@@ -36,56 +42,56 @@ const SalePage = () => {
       price: "13.99",
       originalPrice: "19.99",
       rating: "4.9",
-      image: ProductImage,
+      image: productImages,
     },
     {
       name: "Glasting Melting Balm #Original Series",
       price: "13.99",
       originalPrice: "19.99",
       rating: "4.9",
-      image: ProductImage,
+      image: productImages,
     },
     {
       name: "Glasting Melting Balm #Original Series",
       price: "13.99",
       originalPrice: "19.99",
       rating: "4.9",
-      image: ProductImage,
+      image: productImages,
     },
     {
       name: "Glasting Melting Balm #Original Series",
       price: "13.99",
       originalPrice: "19.99",
       rating: "4.9",
-      image: ProductImage,
+      image: productImages,
     },
     {
       name: "Glasting Melting Balm #Original Series",
       price: "13.99",
       originalPrice: "19.99",
       rating: "4.9",
-      image: ProductImage,
+      image: productImages,
     },
     {
       name: "Glasting Melting Balm #Original Series",
       price: "13.99",
       originalPrice: "19.99",
       rating: "4.9",
-      image: ProductImage,
+      image: productImages,
     },
     {
       name: "Glasting Melting Balm #Original Series",
       price: "13.99",
       originalPrice: "19.99",
       rating: "4.9",
-      image: ProductImage,
+      image: productImages,
     },
     {
       name: "Glasting Melting Balm #Original Series",
       price: "13.99",
       originalPrice: "19.99",
       rating: "4.9",
-      image: ProductImage,
+      image: productImages,
     },
   ]);
   const handleMakeupClick = () => {
@@ -110,7 +116,7 @@ const SalePage = () => {
     // Handle Sort Change
   };
   useEffect(() => {
-    console.log(location);
+    setPathname(location.pathname);
   }, [location]);
   return (
     <Box
@@ -373,137 +379,16 @@ const SalePage = () => {
         <Box sx={{ flexGrow: 1, paddingX: 3 }}>
           <Grid container spacing={2}>
             {products.map((product, index) => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                <Box
-                  sx={{
-                    padding: 1.5,
-                    backgroundColor: "transparent",
-                    borderRadius: "10px",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      position: "relative",
-                      borderRadius: "10px",
-                      overflow: "hidden",
-                    }}
-                  >
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      style={{
-                        width: "100%",
-                        display: "block",
-                        borderRadius: "10px",
-                      }}
-                    />
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        bottom: 0,
-                        right: 0,
-                        display: "flex",
-                        alignItems: "center",
-                        padding: "0.5em",
-                        gap: 10,
-                      }}
-                    >
-                      <IconButton>
-                        <FavoriteBorderIcon sx={{ color: "black" }} />
-                      </IconButton>
-                      <IconButton>
-                        <ShoppingCartOutlinedIcon sx={{ color: "black" }} />
-                      </IconButton>
-                    </Box>
-                  </Box>
-
-                  <Typography
-                    variant="h6"
-                    mt={1}
-                    sx={{
-                      fontWeight: "bold",
-                      fontSize: "1.625rem",
-                      fontFamily: "Montserrat",
-                      color: "rgba(0, 0, 0, 0.7)",
-                    }}
-                  >
-                    {product.name}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    component="div"
-                    sx={{
-                      fontSize: "1.25rem",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 0.5,
-                      color: "black",
-                      fontFamily: "Montserrat",
-                    }}
-                  >
-                    From
-                    <Typography
-                      component="span"
-                      sx={{
-                        fontWeight: "bold",
-                        fontSize: "1.25rem",
-                        fontFamily: "Montserrat",
-                        color: "var(--primary-color)",
-                      }}
-                    >
-                      ${product.price}
-                    </Typography>
-                    <Typography
-                      component="span"
-                      sx={{
-                        fontSize: "1.25rem",
-                        fontWeight: "bold",
-                        fontFamily: "Montserrat",
-                      }}
-                    >
-                      USD
-                    </Typography>
-                    <Typography
-                      component="span"
-                      sx={{
-                        textDecoration: "line-through",
-                        fontWeight: "bold",
-                        fontSize: "1.25rem",
-                        color: "#A78A7F",
-                        fontFamily: "Montserrat",
-                      }}
-                    >
-                      ${product.originalPrice}
-                    </Typography>
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    component="div"
-                    sx={{
-                      fontSize: "1.25rem",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 0.5,
-                    }}
-                  >
-                    <StarIcon
-                      sx={{
-                        fontSize: "1.25rem",
-                        color: "#BF4342",
-                      }}
-                    />
-                    <Typography
-                      component="span"
-                      sx={{
-                        fontWeight: "bold",
-                        fontSize: "1.25rem",
-                        fontFamily: "Montserrat",
-                      }}
-                    >
-                      {product.rating}
-                    </Typography>
-                  </Typography>
-                </Box>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                lg={3}
+                key={index}
+                onClick={() => navigate(`/product-detail/${index}`)}
+              >
+                <ProductCard product={product} pathname={location.pathname} />
               </Grid>
             ))}
           </Grid>
