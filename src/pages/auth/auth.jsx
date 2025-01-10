@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Typography,
   TextField,
   Checkbox,
   FormControlLabel,
-  Grid,
   IconButton,
   Link,
   Button,
@@ -22,7 +21,6 @@ import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
 
 const SignInModal = () => {
   const [open, setOpen] = useState(false);
@@ -44,12 +42,6 @@ const SignInModal = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
-  const handleMouseUpPassword = (event) => {
-    event.preventDefault();
-  };
-
-  const togglePasswordVisibility = (setter) => setter((prev) => !prev);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -332,7 +324,6 @@ const SignInModal = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            position: "relative",
           }}
         >
           <IconButton

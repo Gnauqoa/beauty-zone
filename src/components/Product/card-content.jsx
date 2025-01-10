@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import PropTypes from "prop-types";
 import { Box, Typography, IconButton } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
@@ -32,6 +33,7 @@ const ProductCard = ({ product }) => {
         borderRadius: "10px",
         cursor: "pointer",
         transition: "transform 0.2s ease",
+
         "&:hover": {
           transform: "translateY(-5px)",
         },
@@ -66,7 +68,7 @@ const ProductCard = ({ product }) => {
             alt={product.name}
             style={{
               width: "100%",
-              minHeight: "294px",
+              minHeight: "  ",
               display: "block",
             }}
           />
@@ -218,6 +220,16 @@ const ProductCard = ({ product }) => {
       </Typography>
     </Box>
   );
+};
+ProductCard.propTypes = {
+  product: PropTypes.shape({
+    slug: PropTypes.string.isRequired,
+    image: PropTypes.arrayOf(PropTypes.string).isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    originalPrice: PropTypes.number.isRequired,
+    rating: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default ProductCard;

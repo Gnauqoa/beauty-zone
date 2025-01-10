@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Typography,
@@ -6,22 +6,10 @@ import {
   Select,
   MenuItem,
   FormControl,
-  InputLabel,
-  List,
-  ListItem,
-  ListItemText,
-  Collapse,
   Stack,
 } from "@mui/material";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { IconButton } from "@mui/material";
-import ProductDefault from "../../assets/products/default-product.png";
-import ProductImage1 from "../../assets/products/product-img.png";
-import StarIcon from "@mui/icons-material/Star";
 import { useLocation, useNavigate } from "react-router-dom";
 import ProductCard from "../../components/Product/card-content";
 import { productData } from "../../utils/product-data";

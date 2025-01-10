@@ -13,7 +13,6 @@ import Step1 from "../pages/find-your-shape/mobile/step-1";
 import Mobile from "./mobile";
 import Step2 from "../pages/find-your-shape/mobile/step-2";
 import Step3 from "../pages/find-your-shape/mobile/step-3";
-import { Stack } from "@mui/material";
 import Result from "../pages/find-your-shape/desktop/result";
 import ChatBot from "../pages/virtual-services/chat-bot";
 import SalePage from "../pages/outlet/sale-page";
@@ -49,10 +48,7 @@ const RouterProvider = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Root />}>
-          <Route
-            path={PATH_PAGE.main}
-            element={<Stack sx={{ minHeight: "100vh" }} />}
-          />
+          <Route path={PATH_PAGE.main} element={<SalePage />} />
           <Route
             path={PATH_PAGE.virtualServices.root}
             element={<VirtualServices />}
