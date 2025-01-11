@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+import useResponsive from "../../hooks/useResponsive";
 import { useState, useEffect } from "react";
 import {
   Box,
@@ -501,7 +503,15 @@ function ProductDetail() {
               ml: 2,
             }}
           >
-            {productData.featured.map((value, index) => (
+            {(
+              productData?.featured || [
+                "The creamy matte texture is as soft and smooth as velvet, gliding effortlessly on the lips for a weightless, comfortable feel.",
+                "The finish is smooth and silky, creating a trendy 'blur' effect, completely covering lip lines and imperfections.",
+                "The color payoff is precise, delivering a fresh, radiant color with just one swipe.",
+                "With impressive staying power of 4-6 hours, you can confidently wear it all day long.",
+                "Especially, Romand Blur Fudge Tint 5gr does not dry out the lips, providing essential moisture to keep them soft.",
+              ]
+            ).map((value, index) => (
               <ListItem
                 key={index}
                 sx={{
@@ -548,25 +558,27 @@ function ProductDetail() {
             Suggested Use
           </Typography>
           <List sx={{ fontFamily: "Montserrat" }}>
-            {productData.suggestedUse.map((value, index) => (
-              <ListItem
-                key={index}
-                sx={{
-                  py: 0.5,
-                  display: "list-item",
-                }}
-              >
-                <ListItemText
-                  primary={value}
+            {/* {(productData?.suggestedUse || suggestedUseLipstick).map(
+              (value, index) => (
+                <ListItem
+                  key={index}
                   sx={{
-                    "& .MuiTypography-root": {
-                      fontFamily: "Montserrat",
-                      fontSize: "1rem",
-                    },
+                    py: 0.5,
+                    display: "list-item",
                   }}
-                />
-              </ListItem>
-            ))}
+                >
+                  <ListItemText
+                    primary={value}
+                    sx={{
+                      "& .MuiTypography-root": {
+                        fontFamily: "Montserrat",
+                        fontSize: "1rem",
+                      },
+                    }}
+                  />
+                </ListItem>
+              )
+            )} */}
           </List>
         </Box>
 
@@ -832,9 +844,6 @@ function ProductDetail() {
     </Box>
   );
 }
-
-import PropTypes from "prop-types";
-import useResponsive from "../../hooks/useResponsive";
 
 ProductDetail.propTypes = {
   productData: PropTypes.shape({
