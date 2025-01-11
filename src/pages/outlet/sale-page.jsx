@@ -15,11 +15,13 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { IconButton } from "@mui/material";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ProductCard from "../../components/Product/card-content";
 import { productData } from "../../utils/product-data";
 import useResponsive from "../../hooks/useResponsive";
+import { PATH_PAGE } from "../../routers/path";
 const SalePage = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const isMakeupPage = location.pathname === "/makeup";
   const isSkincarePage = location.pathname === "/skincare";
@@ -324,33 +326,35 @@ const SalePage = () => {
   };
 
   return (
-    <div className={"flex flex-col bg-[#f5e5d8]"}>
+    <div className={"flex flex-col bg-[#f5e5d8] pt-10"}>
       <Stack direction="row" justifyContent="left" alignItems="center">
-        <Typography
-          sx={{
-            fontWeight: "bold",
-            fontSize: "1.25rem",
-            color: "var(--primary-color)",
-            fontFamily: "Montserrat",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <IconButton>
-            <KeyboardArrowLeftIcon />
-          </IconButton>
-          {location.pathname === "/sale"
-            ? "SALE"
-            : location.pathname === "/new"
-            ? "NEW"
-            : location.pathname === "/best-sellers"
-            ? "BEST SELLERS"
-            : location.pathname === "/makeup"
-            ? "MAKEUP"
-            : location.pathname === "/skincare"
-            ? "SKINCARE"
-            : ""}
-        </Typography>
+        {location.pathname !== PATH_PAGE.main && (
+          <Typography
+            sx={{
+              fontWeight: "bold",
+              fontSize: "1.25rem",
+              color: "var(--primary-color)",
+              fontFamily: "Montserrat",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <IconButton onClick={() => navigate(-1)}>
+              <KeyboardArrowLeftIcon />
+            </IconButton>
+            {location.pathname === "/sale"
+              ? "SALE"
+              : location.pathname === "/new"
+              ? "NEW"
+              : location.pathname === "/best-sellers"
+              ? "BEST SELLERS"
+              : location.pathname === "/makeup"
+              ? "MAKEUP"
+              : location.pathname === "/skincare"
+              ? "SKINCARE"
+              : ""}
+          </Typography>
+        )}
       </Stack>
       <Stack
         direction="row"

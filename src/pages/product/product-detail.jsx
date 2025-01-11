@@ -8,9 +8,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  Card,
-  CardMedia,
-  CardContent,
   Grid,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -20,20 +17,18 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ProductImage1 from "../../assets/products/product-img.png";
-import ProductThumbnail1 from "../../assets/products/item 1.png";
-import ProductThumbnail2 from "../../assets/products/item 2.png";
-import ProductThumbnail3 from "../../assets/products/item 3.png";
+
 import StarIcon from "@mui/icons-material/Star";
 import ProductCard from "../../components/Product/card-content";
 import ProductDefault from "../../assets/products/default-product.png";
 import ReviewItem from "../../components/Product/review-item";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function ProductDetail({ product }) {
+function ProductDetail() {
   const navigate = useNavigate();
-  const location = useLocation();
+  const isMd = useResponsive("down", "md");
 
-  const [productData, setProductData] = useState(() => {
+  const [productData] = useState(() => {
     const savedProduct = localStorage.getItem("selectedProduct");
     return savedProduct ? JSON.parse(savedProduct) : null;
   });
@@ -45,7 +40,7 @@ function ProductDetail({ product }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [showZoom, setShowZoom] = useState(false);
-  const [images, setImages] = useState(productData.image || []);
+  const [images] = useState(productData.image || []);
 
   const productImages = [ProductDefault, ProductImage1];
 
@@ -170,28 +165,28 @@ function ProductDetail({ product }) {
   };
 
   return (
-    <Box sx={{ pl: 4, bgcolor: "#f5e5d8" }}>
-      <Stack>
-        <Stack direction="row" alignItems="center">
-          <Typography
-            sx={{
-              fontWeight: "bold",
-              fontSize: "1.25rem",
-              color: "var(--primary-color)",
-              fontFamily: "Montserrat",
-              display: "flex",
-              alignItems: "center",
-              mb: 2,
-            }}
-          >
-            <IconButton onClick={handleBackClick}>
-              <KeyboardArrowLeftIcon />
-            </IconButton>
-            {productData.name}
-          </Typography>
-        </Stack>
-        <Stack direction="row" spacing={4}>
-          <Box sx={{ width: "30%" }}>
+    <Box sx={{ bgcolor: "#f5e5d8", pt: 5 }}>
+      <Stack direction="row" alignItems="center">
+        <Typography
+          sx={{
+            fontWeight: "bold",
+            fontSize: "1.25rem",
+            color: "var(--primary-color)",
+            fontFamily: "Montserrat",
+            display: "flex",
+            alignItems: "center",
+            mb: 2,
+          }}
+        >
+          <IconButton onClick={handleBackClick}>
+            <KeyboardArrowLeftIcon />
+          </IconButton>
+          {productData.name}
+        </Typography>
+      </Stack>
+      <Stack sx={{ px: 4 }}>
+        <Stack direction={isMd ? "column" : "row"} spacing={4}>
+          <Box sx={{ width: isMd ? "100%" : "30%" }}>
             <Box
               sx={{
                 borderRadius: "30px",
@@ -399,7 +394,7 @@ function ProductDetail({ product }) {
           </Box>
 
           {/* Right Side - Product Info */}
-          <Box sx={{ width: "70%" }}>
+          <Box sx={{ width: isMd ? "100%" : "70%" }}>
             <Typography
               variant="h4"
               sx={{
@@ -415,81 +410,11 @@ function ProductDetail({ product }) {
             </Typography>
 
             <Box sx={{ mb: 3 }}>
-              {/* <Typography
-                variant="h6"
-                sx={{
-                  color: "#BF4342",
-                  mb: 1,
-                  fontFamily: "Montserrat",
-                  fontSize: "1.875rem",
-                  fontWeight: "bold",
-                }}
-              >
-                [Set Components]
-              </Typography>
-              <List
-                sx={{
-                  listStyleType: "disc",
-                  pl: 4,
-                  ml: 2,
-                }}
-              >
-                <ListItem
-                  sx={{
-                    py: 0,
-                    display: "list-item",
-                  }}
-                >
-                  <ListItemText
-                    primary="05 Nougat Sand"
-                    sx={{
-                      "& .MuiTypography-root": {
-                        fontSize: "1.15rem",
-                        fontFamily: "Montserrat",
-                        fontWeight: "bold",
-                      },
-                    }}
-                  />
-                </ListItem>
-                <ListItem
-                  sx={{
-                    py: 0,
-                    display: "list-item",
-                  }}
-                >
-                  <ListItemText
-                    primary="06 Kaya Fig"
-                    sx={{
-                      "& .MuiTypography-root": {
-                        fontSize: "1.15rem",
-                        fontFamily: "Montserrat",
-                        fontWeight: "bold",
-                      },
-                    }}
-                  />
-                </ListItem>
-                <ListItem
-                  sx={{
-                    py: 0,
-                    display: "list-item",
-                  }}
-                >
-                  <ListItemText
-                    primary="07 Mauve Whip"
-                    sx={{
-                      "& .MuiTypography-root": {
-                        fontSize: "1.15rem",
-                        fontFamily: "Montserrat",
-                        fontWeight: "bold",
-                      },
-                    }}
-                  />
-                </ListItem>
-              </List> */}
               {productData.usage && (
                 <Stack direction="column" spacing={1}>
                   {productData.usage.map((value, index) => (
                     <Typography
+                      key={index}
                       variant="div"
                       sx={{
                         color: "black",
@@ -667,33 +592,41 @@ function ProductDetail({ product }) {
               px: 2,
             }}
           >
-            Customer's Review
+            {`Customer's Review`}
           </Typography>
 
           {/* Rating Summary */}
-          <Stack direction="row" spacing={4} alignItems="center" sx={{ mb: 2 }}>
-            <Stack direction="row" alignItems="center" spacing={1}>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: "bold",
-                  fontFamily: "Montserrat",
-                  color: "#BF4342",
-                }}
-              >
-                4.9
-              </Typography>
-              <StarIcon sx={{ color: "#BF4342" }} />
-            </Stack>
-            <Typography
-              sx={{
-                color: "#666",
-                fontFamily: "Montserrat",
-              }}
-            >
-              Based on 36 reviews
-            </Typography>
-            {/* Rating Bars */}
+          <Stack
+            direction={isMd ? "column" : "row"}
+            spacing={4}
+            alignItems="center"
+            sx={{ mb: 2 }}
+          >
+            <div className="flex flex-row gap-1">
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: "bold",
+                    fontFamily: "Montserrat",
+                    color: "#BF4342",
+                  }}
+                >
+                  4.9
+                </Typography>
+                <StarIcon sx={{ color: "#BF4342" }} />
+              </Stack>
+              {!isMd && (
+                <Typography
+                  sx={{
+                    color: "#666",
+                    fontFamily: "Montserrat",
+                  }}
+                >
+                  Based on 36 reviews
+                </Typography>
+              )}
+            </div>
             <Stack spacing={0.5} sx={{ mb: 3, minWidth: "50%" }}>
               {[5, 4, 3, 2, 1].map((rating) => (
                 <Stack
@@ -899,5 +832,24 @@ function ProductDetail({ product }) {
     </Box>
   );
 }
+
+import PropTypes from "prop-types";
+import useResponsive from "../../hooks/useResponsive";
+
+ProductDetail.propTypes = {
+  productData: PropTypes.shape({
+    name: PropTypes.string,
+    image: PropTypes.arrayOf(PropTypes.string),
+    usage: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        description: PropTypes.string,
+      })
+    ),
+    price: PropTypes.number,
+    featured: PropTypes.arrayOf(PropTypes.string),
+    suggestedUse: PropTypes.arrayOf(PropTypes.string),
+  }),
+};
 
 export default ProductDetail;
