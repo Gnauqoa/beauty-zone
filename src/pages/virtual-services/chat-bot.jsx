@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { useSearchParams } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
 import CallIcon from "@mui/icons-material/Call";
+import { productData } from "../../utils/product-data";
+import ProductCard from "../../components/Product/card-content";
 
 const chatBotExample = [
   "Xin chào! Tôi là AI tư vấn của BeautyZone. Tôi có thể giúp gì cho bạn?",
@@ -34,7 +36,15 @@ const ChatBot = () => {
         (isEmployee ? employeeChatExample : chatBotExample)[
           messages.length / 2
         ] || "Xin lỗi, tôi chưa hiểu ý của bạn.";
-      setMessages((prev) => [...prev, { type: "bot", content: botResponse }]);
+      let newMessage = [];
+      newMessage.push({ type: "bot", content: botResponse });
+      if (messages.length > 0) {
+        newMessage.push({ type: "product", content: productData[0] });
+        newMessage.push({ type: "product", content: productData[1] });
+        newMessage.push({ type: "product", content: productData[2] });
+      }
+
+      setMessages((prev) => [...prev, ...newMessage]);
     }, 1000);
   };
 
@@ -45,7 +55,7 @@ const ChatBot = () => {
         height: "100%",
         bgcolor: "background.default",
         p: 2,
-        gap: 5,
+        gap: 2,
         overflowY: "auto",
         pt: 5,
       }}
@@ -67,6 +77,15 @@ const ChatBot = () => {
       {messages.map((message, index) => {
         if (message.type === "user")
           return <UserChat key={index} content={message.content} />;
+        if (message.type === "product")
+          return (
+            <div
+              className="flex flex-col mr-auto max-w-[300px] mt-[-12px] overflow-hidden"
+              key={index}
+            >
+              <ProductCard product={message.content} />;
+            </div>
+          );
         return <BotChat key={index} content={message.content} />;
       })}
       <ChatBox onSubmit={handleSubmitMessage} />

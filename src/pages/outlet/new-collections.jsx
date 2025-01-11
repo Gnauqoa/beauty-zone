@@ -41,7 +41,7 @@ function NewCollection() {
         flexDirection: "column",
         bgcolor: "#f5e5d8",
         px: 0,
-        pb: 15,
+        py: 4,
       }}
     >
       <Stack direction="row" justifyContent="left" alignItems="center">
@@ -55,7 +55,7 @@ function NewCollection() {
             alignItems: "center",
           }}
         >
-          <IconButton>
+          <IconButton onClick={() => navigate(-1)}>
             <KeyboardArrowLeftIcon />
           </IconButton>
           New Collections

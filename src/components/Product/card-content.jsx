@@ -68,7 +68,7 @@ const ProductCard = ({ product }) => {
             alt={product.name}
             style={{
               width: "100%",
-              minHeight: "  ",
+              minHeight: "",
               display: "block",
             }}
           />
@@ -221,6 +221,7 @@ const ProductCard = ({ product }) => {
     </Box>
   );
 };
+
 ProductCard.propTypes = {
   product: PropTypes.shape({
     slug: PropTypes.string.isRequired,
