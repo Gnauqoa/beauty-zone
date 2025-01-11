@@ -1,4 +1,6 @@
 import { Stack, Typography } from "@mui/material";
+import { productData } from "../../../utils/product-data";
+import ProductCard from "../../../components/Product/card-content";
 
 const Step3 = () => {
   return (
@@ -20,6 +22,10 @@ const Step3 = () => {
       <Typography sx={{ fontSize: 20, fontWeight: 100 }}>
         Here is some recommends for you
       </Typography>
+
+      {productData.slice(0, 3).map((product, index) => (
+        <ProductCard key={index} product={product} />
+      ))}
     </Stack>
   );
 };

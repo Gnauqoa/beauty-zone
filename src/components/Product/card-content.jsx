@@ -114,7 +114,15 @@ const ProductCard = ({ product }) => {
               },
             }}
           >
-            <FavoriteBorderIcon sx={{ color: "black", fontSize: "1.25rem" }} />
+            <FavoriteBorderIcon
+              sx={{
+                color: "#fff",
+                fontSize: "1.25rem",
+                "&:hover": {
+                  color: "#000",
+                },
+              }}
+            />
           </IconButton>
           <IconButton
             size="small"
@@ -126,7 +134,13 @@ const ProductCard = ({ product }) => {
             }}
           >
             <ShoppingCartOutlinedIcon
-              sx={{ color: "black", fontSize: "1.25rem" }}
+              sx={{
+                color: "#fff",
+                "&:hover": {
+                  color: "#000",
+                },
+                fontSize: "1.25rem",
+              }}
             />
           </IconButton>
         </Box>

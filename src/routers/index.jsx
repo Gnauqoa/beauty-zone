@@ -42,6 +42,7 @@ import Cart from "../pages/Cart/cart-page";
 //   },
 // ]);
 import VirtualConsultation from "../pages/virtual-services/virtual-consultation";
+import Step2Mobile from "../pages/find-your-shape/mobile/step-2-android";
 
 const RouterProvider = () => {
   return (
@@ -94,7 +95,7 @@ const RouterProvider = () => {
           />
           <Route
             path={PATH_PAGE.mobile.findYourShape.step2}
-            element={<Step2 />}
+            element={window.cordova ? <Step2Mobile /> : <Step2Mobile />}
           />
           <Route
             path={PATH_PAGE.mobile.findYourShape.step3}
