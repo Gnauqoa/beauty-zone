@@ -1,6 +1,5 @@
 import {
   FavoriteBorderOutlined,
-  PersonOutline,
   SearchOutlined,
   ShoppingBagOutlined,
 } from "@mui/icons-material";
@@ -32,7 +31,7 @@ const Menu = () => {
         sx={{ width: 40, cursor: "pointer" }}
         onClick={handleCart}
       />
-      <PersonOutline sx={{ width: 40 }} />
+
       <SignInModal />
     </Stack>
   );

@@ -1,5 +1,4 @@
-import React from "react";
-import { Box, Typography, Button, Link } from "@mui/material";
+import { Box } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 const MenuBar = () => {

@@ -21,6 +21,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Menu as MuiMenu, MenuItem } from "@mui/material";
 
 const SignInModal = () => {
   const [open, setOpen] = useState(false);
@@ -31,6 +32,15 @@ const SignInModal = () => {
     email: "",
     password: "",
   });
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openMenu = Boolean(anchorEl);
+  const handleClickMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState(() => {
@@ -294,17 +304,41 @@ const SignInModal = () => {
 
   return (
     <Box>
-      <Typography
-        onClick={currentUser ? null : handleOpen}
-        sx={{
-          fontSize: 18,
-          cursor: currentUser ? "default" : "pointer",
-          fontFamily: "Montserrat",
-          color: "#000",
+      <div
+        onClick={currentUser ? handleClickMenu : () => {}}
+        className="cursor-pointer"
+      >
+        <Typography
+          onClick={currentUser ? null : handleOpen}
+          sx={{
+            fontSize: 18,
+            cursor: currentUser ? "default" : "pointer",
+            fontFamily: "Montserrat",
+            color: "#000",
+          }}
+        >
+          {currentUser ? `Hello, ${currentUser.name}` : "SIGN IN"}
+        </Typography>
+      </div>
+      <MuiMenu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={openMenu}
+        onClose={handleCloseMenu}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
         }}
       >
-        {currentUser ? `Hello, ${currentUser.name}` : "SIGN IN"}
-      </Typography>
+        <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleCloseMenu();
+            setCurrentUser(null);
+          }}
+        >
+          Logout
+        </MenuItem>
+      </MuiMenu>
       <Modal
         open={open}
         onClose={handleClose}
