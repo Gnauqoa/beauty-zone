@@ -1,3 +1,4 @@
+import useResponsive from "../../hooks/useResponsive";
 import { useState } from "react";
 import {
   Box,
@@ -141,8 +142,8 @@ const SignInModal = () => {
         sx={{
           bgcolor: "rgba(140,28,19,0.2)",
           padding: 2,
-          width: "592px",
-          borderRadius: "35px",
+          width: "100%",
+          borderRadius: "8px",
           boxShadow: "inset 0px 0px 3px 0px rgba(0,0,0,0.1)",
         }}
       >
@@ -262,46 +263,70 @@ const SignInModal = () => {
             label="Confirm Password"
           />
         </FormControl>
-        <Typography
-          variant="body2"
-          mt={1}
-          sx={{
-            fontFamily: "Montserrat",
-            maxWidth: "365px",
-            fontSize: "0.75em",
-            color: "#000000de",
-          }}
-        >
-          By signing up, you agree to our{" "}
-          <Link
-            component="span"
+        <FormControlLabel
+          control={<Checkbox size="small" />}
+          label={
+            <Typography
+              variant="body2"
+              mt={1}
+              sx={{
+                fontFamily: "Montserrat",
+                maxWidth: "365px",
+                fontSize: "0.75em",
+                color: "#000000de",
+              }}
+            >
+              By signing up, you agree to our{" "}
+              <Link
+                component="span"
+                sx={{
+                  fontWeight: "bold",
+                  textDecoration: "none",
+                  color: "#8C1C13",
+                  cursor: "pointer",
+                }}
+              >
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link
+                component="span"
+                sx={{
+                  fontWeight: "bold",
+                  textDecoration: "none",
+                  color: "#8C1C13",
+                  cursor: "pointer",
+                }}
+              >
+                Privacy Policy
+              </Link>
+            </Typography>
+          }
+        />
+
+        <div className="flex">
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            disabled={isLoading}
             sx={{
-              fontWeight: "bold",
-              textDecoration: "none",
-              color: "#8C1C13",
-              cursor: "pointer",
+              mt: 2,
+              bgcolor: "#8C1C13",
+              borderRadius: "10px",
+              "&:hover": {
+                bgcolor: "#6b150f",
+              },
+              textTransform: "none",
             }}
           >
-            Terms of Service
-          </Link>{" "}
-          and{" "}
-          <Link
-            component="span"
-            sx={{
-              fontWeight: "bold",
-              textDecoration: "none",
-              color: "#8C1C13",
-              cursor: "pointer",
-            }}
-          >
-            Privacy Policy
-          </Link>
-          .
-        </Typography>
+            {isLoading ? "Signing in..." : "Sign Up"}
+          </Button>
+        </div>
       </Box>
     </>
   );
-
+  const isMd = useResponsive("down", "md");
   return (
     <Box>
       <div
@@ -317,7 +342,7 @@ const SignInModal = () => {
             color: "#000",
           }}
         >
-          {currentUser ? `Hello, ${currentUser.name}` : "SIGN IN"}
+          {currentUser ? `Hello, ${currentUser.name}` : "Sign In"}
         </Typography>
       </div>
       <MuiMenu
@@ -350,7 +375,7 @@ const SignInModal = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: "675px",
+            width: isMd ? "90%" : "70%",
             padding: 3,
             bgcolor: "#E7D7C1",
             borderRadius: 3,
@@ -358,6 +383,8 @@ const SignInModal = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            maxHeight: "90vh",
+            overflowY: "auto",
           }}
         >
           <IconButton
@@ -389,8 +416,8 @@ const SignInModal = () => {
                 sx={{
                   bgcolor: "rgba(140,28,19,0.2)",
                   padding: 2,
-                  width: "592px",
-                  borderRadius: "35px",
+                  width: "100%",
+                  borderRadius: "8px",
                   boxShadow: "inset 0px 0px 3px 0px rgba(0,0,0,0.1)",
                 }}
               >
@@ -472,6 +499,7 @@ const SignInModal = () => {
                     "&:hover": {
                       bgcolor: "#6b150f",
                     },
+                    textTransform: "none",
                   }}
                 >
                   {isLoading ? "Signing in..." : "Sign In"}
